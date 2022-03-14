@@ -2,19 +2,15 @@ import logo from './logo.svg';
 import './App.css';
 import {Container, Row, Col} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import NavBar from './component/nav';
 
 function App() {
   return (
-    <div className='App-header'>
-      <div className='App'>
-      <Container fluid>
-      <Row>
-        <Col>Dashboard</Col>
-        <Col>Parameter</Col>
-      </Row>
-    </Container>
-    </div>
-    </div>
+    <>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <NavBar/>
+    </nav>
+    </>
   );
 }
 
