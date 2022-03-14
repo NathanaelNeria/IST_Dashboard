@@ -1,20 +1,14 @@
-import logo from './logo.svg';
-import './App.css';
-import {Container, Row, Col} from 'react-bootstrap'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import Router from "./routes/router";
+import { BrowserRouter } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
-    <div className='App-header'>
-      <div className='App'>
-      <Container fluid>
-      <Row>
-        <Col>Dashboard</Col>
-        <Col>Parameter</Col>
-      </Row>
-    </Container>
-    </div>
-    </div>
+    <>
+      <BrowserRouter>
+        <Router />
+      </BrowserRouter>
+    </>
   );
 }
 
