@@ -10,7 +10,7 @@ function Router(){
             <Route exact path='/login'>
                 <Login/>
             </Route>
-            <Route exact path='/'>
+            <Route exact path='/home'>
                 <App/>
             </Route>
         </Switch>
