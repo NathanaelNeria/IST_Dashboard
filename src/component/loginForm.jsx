@@ -1,51 +1,47 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { Button, Spinner } from "react-bootstrap";
 
 function LoginForm() {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [loggedin, setLoggedin] = useState(true)
-  var OK = ''
-  var Token = ''
-  const history = useHistory()
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [loggedin, setLoggedin] = useState(true);
+  var OK = "";
+  var Token = "";
+  const history = useHistory();
 
   const handleToken = async () => {
-    setLoading(true)
-    const body = {username: username, password: password}
+    const body = { username: username, password: password };
 
-    await axios.post('https://api-portal.herokuapp.com/api/v1/auth/login', body)
-    .then((resp) => {
-      const json = JSON.stringify(resp.data)
-      const parsed = JSON.parse(json)
-      Token = parsed.data.token
+    await axios.post("https://api-portal.herokuapp.com/api/v1/auth/login", body).then((resp) => {
+      const json = JSON.stringify(resp.data);
+      const parsed = JSON.parse(json);
+      Token = parsed.data.token;
       console.log("login", Token);
-    })
-
-    handleLogin()
-  }
+    });
+    setLoading(true);
+    handleLogin();
+  };
 
   const handleLogin = async () => {
+    await axios.get("https://api-portal.herokuapp.com/api/v1/auth/admin", { headers: { Authorization: `Bearer ${Token}` } }).then((resp) => {
+      const json = JSON.stringify(resp.data);
+      const parsed = JSON.parse(json);
+      OK = parsed.message;
+      console.log(OK);
+    });
 
-    await axios.get('https://api-portal.herokuapp.com/api/v1/auth/admin', { headers: { Authorization: `Bearer ${Token}` } })
-    .then(resp => {
-      const json = JSON.stringify(resp.data)
-      const parsed = JSON.parse(json)
-      OK = parsed.message
-      console.log(OK)
-    })
-
-    if(OK === 'OK'){
-      // history.push('/dashboard')
-      console.log("ok")
+    if (OK === "OK") {
+      history.push("/dashboard");
+      console.log("ok");
+    } else {
+      setLoading(false);
+      setLoggedin(false);
     }
-    else{
-      setLoading(false)
-      setLoggedin(false)
-    }
-  }
-
+  };
+  console.log(loading);
   return (
     <>
       <form>
@@ -53,7 +49,7 @@ function LoginForm() {
         <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
 
         <div className="form-floating">
-          <input type="text" className="form-control" id="floatingInput" placeholder="Username" onChange={(e) => setUsername(e.target.value)}/>
+          <input type="text" className="form-control" id="floatingInput" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
           <label htmlFor="floatingInput">User Name</label>
         </div>
         <div className="form-floating">
@@ -66,9 +62,10 @@ function LoginForm() {
             <input type="checkbox" value="remember-me" /> Remember me
           </label>
         </div>
-        <button className="w-100 btn btn-lg btn-primary" type="submit" onClick={handleToken}>
-          Sign in
-        </button>
+        <Button color="primary" className="px-4" onClick={handleToken} disabled={loading}>
+          {loading && <Spinner component="span" size="sm" aria-hidden="true" />}
+          Login
+        </Button>
         <p className="mt-5 mb-3 text-muted">© 2017–2021</p>
       </form>
     </>
