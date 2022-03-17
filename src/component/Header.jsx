@@ -1,9 +1,6 @@
 import React from "react";
-<<<<<<< HEAD
-import {useHistory} from 'react-router-dom'
-=======
 import { Link } from "react-router-dom";
->>>>>>> cea4889b3adb7dd17f416fce4d428517a30ee1f8
+import {useHistory} from 'react-router-dom'
 
 function Header() {
   const history = useHistory()
@@ -24,15 +21,9 @@ function Header() {
 
         <div className="navbar-nav">
           <div className="nav-item text-nowrap">
-<<<<<<< HEAD
-            <a className="nav-link px-3" onClick={handleSignOut}>
-              Sign out
-            </a>
-=======
             <Link to="/">
               <a className="nav-link px-3">Sign out</a>
             </Link>
->>>>>>> cea4889b3adb7dd17f416fce4d428517a30ee1f8
           </div>
         </div>
       </div>
