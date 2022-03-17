@@ -1,6 +1,13 @@
 import React from "react";
+import {useHistory} from 'react-router-dom'
 
 function Header() {
+  const history = useHistory()
+
+  const handleSignOut = () => {
+    history.push('/')
+  }
+
   return (
     <>
       <div className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 mb-2 shadow">
@@ -13,7 +20,7 @@ function Header() {
         <input className="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search" />
         <div className="navbar-nav">
           <div className="nav-item text-nowrap">
-            <a className="nav-link px-3" href="#">
+            <a className="nav-link px-3" onClick={handleSignOut}>
               Sign out
             </a>
           </div>

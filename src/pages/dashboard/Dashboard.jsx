@@ -1,6 +1,76 @@
-import React from "react";
+import {React, useEffect, useState} from "react";
 import Header from "../../component/Header";
+import firebase from "firebase";
+// import {initializeApp} from 'firebase/app'
+
+
 function Dashboard() {
+  if(firebase.apps.length === 0){
+    firebase.initializeApp({
+      apiKey: "AIzaSyBK4_ckiJfuDrGH2naN07SmruemW2EjRPM",
+      authDomain: "webrtc-dd6e4.firebaseapp.com",
+      databaseURL: "https://webrtc-dd6e4-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "webrtc-dd6e4",
+      storageBucket: "webrtc-dd6e4.appspot.com",
+      messagingSenderId: "143154930393",
+      appId: "1:143154930393:web:1465b41294f95cb5f8d4c8",
+      measurementId: "G-XV6LN18P27"
+    })
+  }
+
+  var db = firebase.firestore()
+  var scheduleRoom
+  var roomAgent1
+  var roomAgent2
+  
+
+  const agentActive = async () =>{
+    await db.collection('isActive').onSnapshot((doc) =>{
+      const agentDoc = doc.docs.map((doc) => {
+        return{ id: doc.id, ...doc.data()}
+      })
+
+      console.log('agent status', agentDoc);
+    })
+  }
+
+  const schedule = async () => {
+    db.collection("rooms").doc('scheduledRoom').collection('scheduledRoomID')
+    .onSnapshot((doc) => {
+      scheduleRoom = doc.size
+
+      console.log('schedule room ', scheduleRoom);
+    })
+
+    
+  }
+
+  const agent1 = async () => {
+    db.collection('rooms').doc("roomAgent1").collection('roomIDAgent1')
+    .onSnapshot((doc) => {
+      roomAgent1 = doc.size
+
+      console.log('room agent1', roomAgent1)
+    })
+  }
+
+  const agent2 = async () => {
+    db.collection('rooms').doc("roomAgent2").collection('roomIDAgent2')
+    .onSnapshot((doc) => {
+      roomAgent2 = doc.size
+
+      console.log('room agent1', roomAgent2)
+    })
+  }
+
+  useEffect(() => {
+    agentActive()
+    schedule()
+    agent1()
+    agent2()
+  }, [])
+  
+
   return (
     <>
       {/* <div className="container"> */}
