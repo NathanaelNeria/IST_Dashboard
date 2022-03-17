@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../../component/Header";
 import NavBar from "../../component/nav";
-function OperationalTime() {
+function Rooms() {
   return (
     <>
       <Header />
@@ -34,4 +34,4 @@ function OperationalTime() {
   );
 }
 
-export default OperationalTime;
+export default Rooms;
