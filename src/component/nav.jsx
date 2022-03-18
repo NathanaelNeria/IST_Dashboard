@@ -12,26 +12,32 @@ function NavBar() {
           <ul className="nav flex-column d-flex align-content-center align-item-center">
             <li className="nav-item ">
               <Link to="/dashboard" style={{ textDecoration: "none" }}>
-                <FcIcons.FcHome style={{ height: "80px", width: "80px", marginTop: "35px" }} />
+                <FcIcons.FcHome style={{ height: "80px", width: "80px" }} />
                 <p style={{ color: "#0072A0" }}> Dashboard</p>
               </Link>
             </li>
             <li className="nav-item">
               <Link to="/webTheming" style={{ textDecoration: "none" }}>
-                <FcIcons.FcMindMap style={{ height: "80px", width: "80px", marginTop: "35px" }} />
+                <FcIcons.FcMindMap style={{ height: "80px", width: "80px" }} />
                 <p style={{ color: "#0072A0" }}> WebTheming</p>
               </Link>
             </li>
             <li className="nav-item">
               <Link to="/operationalTime" style={{ textDecoration: "none" }}>
-                <FcIcons.FcClock style={{ height: "80px", width: "80px", marginTop: "35px" }} />
+                <FcIcons.FcClock style={{ height: "80px", width: "80px" }} />
                 <p style={{ color: "#0072A0" }}> Operational Time</p>
               </Link>
             </li>
             <li className="nav-item">
               <Link to="/roomVideoCall" style={{ textDecoration: "none" }}>
-                <FcIcons.FcCustomerSupport style={{ height: "80px", width: "80px", marginTop: "35px" }} />
+                <FcIcons.FcCustomerSupport style={{ height: "80px", width: "80px" }} />
                 <p style={{ color: "#0072A0" }}> Rooms Video Call</p>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/pageLog" style={{ textDecoration: "none" }}>
+                <FcIcons.FcDataConfiguration style={{ height: "80px", width: "80px" }} />
+                <p style={{ color: "#0072A0" }}> Admin Log</p>
               </Link>
             </li>
           </ul>

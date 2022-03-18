@@ -5,6 +5,7 @@ import { Switch, Route } from "react-router-dom";
 import WebTheming from "../pages/webTheming/webTheming";
 import OperationalTime from "../pages/operational Time/OperationalTime";
 import Rooms from "../pages/RoomVideoCall/Room";
+import PageLog from "../pages/PageLog/PageLog";
 function Router() {
   return (
     <>
@@ -20,6 +21,9 @@ function Router() {
         </Route>
         <Route exact path="/roomVideoCall">
           <Rooms />
+        </Route>
+        <Route exact path="/pageLog">
+          <PageLog />
         </Route>
         <Route exact path="/">
           <Login />

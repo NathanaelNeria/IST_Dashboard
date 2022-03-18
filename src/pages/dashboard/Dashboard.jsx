@@ -1,13 +1,12 @@
-import {React, useEffect, useState} from "react";
+import { React, useEffect, useState } from "react";
 import Header from "../../component/Header";
 import firebase from "firebase";
 import NavBar from "../../component/nav";
-import { Card } from "react-bootstrap";
+//import { Card } from "react-bootstrap";
 // import {initializeApp} from 'firebase/app'
 
-
 function Dashboard() {
-  if(firebase.apps.length === 0){
+  if (firebase.apps.length === 0) {
     firebase.initializeApp({
       apiKey: "AIzaSyBK4_ckiJfuDrGH2naN07SmruemW2EjRPM",
       authDomain: "webrtc-dd6e4.firebaseapp.com",
@@ -16,27 +15,26 @@ function Dashboard() {
       storageBucket: "webrtc-dd6e4.appspot.com",
       messagingSenderId: "143154930393",
       appId: "1:143154930393:web:1465b41294f95cb5f8d4c8",
-      measurementId: "G-XV6LN18P27"
-    })
+      measurementId: "G-XV6LN18P27",
+    });
   }
 
-  var db = firebase.firestore()
+  var db = firebase.firestore();
   // const scheduleRoom = 0
-  
-  const agentActive = async () =>{
-    await db.collection('isActive').onSnapshot((doc) =>{
-      const agentDoc = doc.docs.map((doc) => {
-        return{ id: doc.id, ...doc.data()}
-      })
 
-      console.log('agent status', agentDoc);
-    })
-  }
+  const agentActive = async () => {
+    await db.collection("isActive").onSnapshot((doc) => {
+      const agentDoc = doc.docs.map((doc) => {
+        return { id: doc.id, ...doc.data() };
+      });
+
+      console.log("agent status", agentDoc);
+    });
+  };
 
   useEffect(() => {
-    agentActive()
-  }, [])
-  
+    agentActive();
+  }, []);
 
   return (
     <>
@@ -61,7 +59,6 @@ function Dashboard() {
             {/* <canvas className="my-4 w-100 chartjs-render-monitor" id="myChart" width="2196" height="926" style="display: block; width: 1098px; height: 463px;"></canvas> */}
 
             <h2>Overview</h2>
-
           </div>
         </div>
       </div>
