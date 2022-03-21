@@ -38,7 +38,6 @@ function Dashboard() {
 
   return (
     <>
-      {/* <div className="container"> */}
       <Header />
       <div className="container-fluid">
         <div className="row " style={{ height: "100vh" }}>
@@ -58,7 +57,7 @@ function Dashboard() {
 
             {/* <canvas className="my-4 w-100 chartjs-render-monitor" id="myChart" width="2196" height="926" style="display: block; width: 1098px; height: 463px;"></canvas> */}
 
-            <h2>Active Agent</h2>
+            <h2>Agent Overview</h2>
 
             <Row className="justify-content-center">
               {data?.map((item) => (
@@ -80,7 +79,6 @@ function Dashboard() {
           </div>
         </div>
       </div>
-      {/* </div> */}
     </>
   );
 }

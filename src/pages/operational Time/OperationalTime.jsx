@@ -1,7 +1,13 @@
-import React from "react";
+import {React, useState} from "react";
 import Header from "../../component/Header";
 import NavBar from "../../component/nav";
+import {Row, Col, Card} from 'react-bootstrap'
+import TimeRangePicker from "@wojtekmaj/react-timerange-picker/dist/TimeRangePicker";
+import './operational.css'
+
 function OperationalTime() {
+  const [value, setValue] = useState('08:00', '17:00')
+
   return (
     <>
       <Header />
@@ -23,10 +29,18 @@ function OperationalTime() {
 
             {/* <canvas className="my-4 w-100 chartjs-render-monitor" id="myChart" width="2196" height="926" style="display: block; width: 1098px; height: 463px;"></canvas> */}
 
-            <h2>Section title</h2>
-            <div className="table-responsive">
-              <h1>haiiiiiiiiiiiiiiiiiii!!!!</h1>
-            </div>
+            <h2>Set Bank Operational Hour</h2>
+            
+            <Row className="justify-content-center">
+             <Col className="justify-content-center">
+             <Card border="primary">
+               <Card.Header>Time</Card.Header>
+               <Card.Body>
+                 <TimeRangePicker onChange={setValue} value={value} disableClock={true} />
+               </Card.Body>
+             </Card>
+             </Col>
+            </Row>
           </div>
         </div>
       </div>
