@@ -2,8 +2,7 @@ import {React, useEffect, useState} from "react";
 import Header from "../../component/Header";
 import firebase from "firebase";
 import NavBar from "../../component/nav";
-import { Card } from "react-bootstrap";
-// import {initializeApp} from 'firebase/app'
+import { Card, Col, Row } from "react-bootstrap";
 
 
 function Dashboard() {
@@ -21,7 +20,7 @@ function Dashboard() {
   }
 
   var db = firebase.firestore()
-  // const scheduleRoom = 0
+  const [data, setData] = useState([])
   
   const agentActive = async () =>{
     await db.collection('isActive').onSnapshot((doc) =>{
@@ -30,6 +29,7 @@ function Dashboard() {
       })
 
       console.log('agent status', agentDoc);
+      setData(agentDoc)
     })
   }
 
@@ -60,7 +60,24 @@ function Dashboard() {
 
             {/* <canvas className="my-4 w-100 chartjs-render-monitor" id="myChart" width="2196" height="926" style="display: block; width: 1098px; height: 463px;"></canvas> */}
 
-            <h2>Overview</h2>
+            <h2>Active Agent</h2>
+
+            <Row className="justify-content-center">
+              {data?.map((item) => (
+                <>
+                <Col>
+                <Card border="primary">
+                  <Card.Header>Agent Status</Card.Header>
+                  <Card.Body>
+                    <h4>Video Call Handled: {item?.VCHandled}</h4>
+                    <h4>In Call: {item?.inCall.toString()}</h4>
+                    <h4>Logged In: {item?.loggedIn.toString()}</h4>
+                  </Card.Body>
+                </Card>
+                </Col>
+                </>
+              ))}
+            </Row>
 
           </div>
         </div>
