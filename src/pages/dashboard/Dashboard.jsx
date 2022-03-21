@@ -1,12 +1,11 @@
-import {React, useEffect, useState} from "react";
+import { React, useEffect, useState } from "react";
 import Header from "../../component/Header";
 import firebase from "firebase";
 import NavBar from "../../component/nav";
-import { Card, Col, Row } from "react-bootstrap";
-
+import { Card, Row, Col } from "react-bootstrap";
 
 function Dashboard() {
-  if(firebase.apps.length === 0){
+  if (firebase.apps.length === 0) {
     firebase.initializeApp({
       apiKey: "AIzaSyBK4_ckiJfuDrGH2naN07SmruemW2EjRPM",
       authDomain: "webrtc-dd6e4.firebaseapp.com",
@@ -15,8 +14,8 @@ function Dashboard() {
       storageBucket: "webrtc-dd6e4.appspot.com",
       messagingSenderId: "143154930393",
       appId: "1:143154930393:web:1465b41294f95cb5f8d4c8",
-      measurementId: "G-XV6LN18P27"
-    })
+      measurementId: "G-XV6LN18P27",
+    });
   }
 
   var db = firebase.firestore()
@@ -25,8 +24,8 @@ function Dashboard() {
   const agentActive = async () =>{
     await db.collection('isActive').onSnapshot((doc) =>{
       const agentDoc = doc.docs.map((doc) => {
-        return{ id: doc.id, ...doc.data()}
-      })
+        return { id: doc.id, ...doc.data() };
+      });
 
       console.log('agent status', agentDoc);
       setData(agentDoc)
@@ -34,9 +33,8 @@ function Dashboard() {
   }
 
   useEffect(() => {
-    agentActive()
-  }, [])
-  
+    agentActive();
+  }, []);
 
   return (
     <>
@@ -67,7 +65,7 @@ function Dashboard() {
                 <>
                 <Col>
                 <Card border="primary">
-                  <Card.Header>Agent Status</Card.Header>
+                  <Card.Header>Agent Status {item?.agentNo}</Card.Header>
                   <Card.Body>
                     <h4>Video Call Handled: {item?.VCHandled}</h4>
                     <h4>In Call: {item?.inCall.toString()}</h4>
