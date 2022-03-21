@@ -55,8 +55,6 @@ function PageLog() {
                       <p>background: asdasd</p>
                       <p> box: asdasd</p>
                       <p>title: leperasd</p>
-                      <p>operationalEnd: 17.00</p>
-                      <p>operationalStart: 09.30</p>
                     </Card.Title>
                   </Card.Body>
                 </Card>
@@ -70,8 +68,6 @@ function PageLog() {
                       <p>background: asdasd</p>
                       <p> box: asdasd</p>
                       <p>title: leperasd</p>
-                      <p>operationalEnd: 17.00</p>
-                      <p>operationalStart: 09.30</p>
                     </Card.Title>
                   </Card.Body>
                 </Card>
@@ -85,8 +81,6 @@ function PageLog() {
                       <p>background: asdasd</p>
                       <p> box: asdasd</p>
                       <p>title: leperasd</p>
-                      <p>operationalEnd: 17.00</p>
-                      <p>operationalStart: 09.30</p>
                     </Card.Title>
                   </Card.Body>
                 </Card>
@@ -100,8 +94,6 @@ function PageLog() {
                       <p>background: asdasd</p>
                       <p> box: asdasd</p>
                       <p>title: leperasd</p>
-                      <p>operationalEnd: 17.00</p>
-                      <p>operationalStart: 09.30</p>
                     </Card.Title>
                   </Card.Body>
                 </Card>
@@ -115,8 +107,6 @@ function PageLog() {
                       <p>background: asdasd</p>
                       <p> box: asdasd</p>
                       <p>title: leperasd</p>
-                      <p>operationalEnd: 17.00</p>
-                      <p>operationalStart: 09.30</p>
                     </Card.Title>
                   </Card.Body>
                 </Card>

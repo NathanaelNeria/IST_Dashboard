@@ -6,6 +6,7 @@ import WebTheming from "../pages/webTheming/webTheming";
 import OperationalTime from "../pages/operational Time/OperationalTime";
 import Rooms from "../pages/RoomVideoCall/Room";
 import PageLog from "../pages/PageLog/PageLog";
+import AdminManagement from "../pages/adminManagement/adminManagement";
 function Router() {
   return (
     <>
@@ -27,6 +28,9 @@ function Router() {
         </Route>
         <Route exact path="/">
           <Login />
+        </Route>
+        <Route exact path="/adminManagement">
+          <AdminManagement />
         </Route>
       </Switch>
     </>
