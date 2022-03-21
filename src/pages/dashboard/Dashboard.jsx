@@ -59,13 +59,13 @@ function Dashboard() {
 
             <h2>Agent Overview</h2>
 
-            <Row className="justify-content-center">
+            <Row className="align-items-center" style={{height:'70vh'}}>
               {data?.map((item) => (
                 <>
-                <Col>
-                <Card border="primary" style={{width:'30rem'}}>
+                <Col className="justify-content-center" style={{padding:'6rem'}}>
+                <Card border="primary" style={{width:'25rem', textAlign:'center'}}>
                   <Card.Header>Agent Status {item?.agentNo}</Card.Header>
-                  <Card.Body className="justify-content-center">
+                  <Card.Body style={{alignItems:'center'}}>
                     <h4>Video Call Handled: {item?.VCHandled}</h4>
                     <h4>In Call: {item?.inCall.toString()}</h4>
                     <h4>Logged In: {item?.loggedIn.toString()}</h4>
