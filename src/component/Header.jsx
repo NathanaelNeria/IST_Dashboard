@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {useHistory} from 'react-router-dom'
+import icon from '../assets/ISTicon.png'
 
 function Header() {
   const history = useHistory()
@@ -13,8 +14,9 @@ function Header() {
     <>
       <div className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 mb-2 shadow">
         <Link to='/dashboard'>
+        <img src={icon} alt='' width='50px' height='50px'/>
         <a className="navbar-brand col-md-3 col-lg-2 me-0 px-3">
-          Bank
+          IST Dashboard
         </a>
         </Link>
         <button className="navbar-toggler position-absolute d-md-none collapsed" 

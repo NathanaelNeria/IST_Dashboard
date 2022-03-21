@@ -63,9 +63,9 @@ function Dashboard() {
               {data?.map((item) => (
                 <>
                 <Col>
-                <Card border="primary">
+                <Card border="primary" style={{width:'30rem'}}>
                   <Card.Header>Agent Status {item?.agentNo}</Card.Header>
-                  <Card.Body>
+                  <Card.Body className="justify-content-center">
                     <h4>Video Call Handled: {item?.VCHandled}</h4>
                     <h4>In Call: {item?.inCall.toString()}</h4>
                     <h4>Logged In: {item?.loggedIn.toString()}</h4>
