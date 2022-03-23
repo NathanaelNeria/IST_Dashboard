@@ -47,6 +47,12 @@ function NavBar() {
                 <p style={{ color: "#0072A0" }}> Admin Log</p>
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to={"/adminManagement/" + role} style={{ textDecoration: "none" }}>
+                <FcIcons.FcConferenceCall style={{ height: "80px", width: "80px" }} />
+                <p style={{ color: "#0072A0" }}> Admin Management</p>
+              </Link>
+            </li>
           </ul>
         </div>
       </nav>

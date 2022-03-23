@@ -36,12 +36,12 @@ function LoginForm() {
   }
 
   const handleLogin = async () => {
-    await axios.get("https://api-portal.herokuapp.com/api/v1/auth/admin", { headers: { Authorization: `Bearer ${Token}` } }).then((resp) => {
-      const json = JSON.stringify(resp.data);
-      const parsed = JSON.parse(json);
-      OK = parsed.message;
-      console.log(OK);
-    });
+    // await axios.get("https://api-portal.herokuapp.com/api/v1/auth/admin", { headers: { Authorization: `Bearer ${Token}` } }).then((resp) => {
+    //   const json = JSON.stringify(resp.data);
+    //   const parsed = JSON.parse(json);
+    //   OK = parsed.message;
+    //   console.log(OK);
+    // });
 
     await axios.get('https://api-portal.herokuapp.com/api/v1/auth/admin', { headers: { Authorization: `Bearer ${Token}` } })
     .then(resp => {
