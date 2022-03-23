@@ -11,25 +11,25 @@ function Router() {
   return (
     <>
       <Switch>
-        <Route exact path="/dashboard/:role">
+        <Route exact path="/dashboard">
           <Dashboard />
         </Route>
-        <Route exact path="/webTheming/:role">
+        <Route exact path="/webTheming">
           <WebTheming />
         </Route>
-        <Route exact path="/operationalTime/:role">
+        <Route exact path="/operationalTime">
           <OperationalTime />
         </Route>
-        <Route exact path="/roomVideoCall/:role">
+        <Route exact path="/roomVideoCall">
           <Rooms />
         </Route>
-        <Route exact path="/pageLog/:role">
+        <Route exact path="/pageLog">
           <PageLog />
         </Route>
         <Route exact path="/">
           <Login />
         </Route>
-        <Route exact path="/adminManagement/:role">
+        <Route exact path="/adminManagement/">
           <AdminManagement />
         </Route>
       </Switch>

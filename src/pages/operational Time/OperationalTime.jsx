@@ -1,19 +1,17 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
 import Header from "../../component/Header";
 import NavBar from "../../component/nav";
-import {Row, Col, Card} from 'react-bootstrap'
+import { Row, Col, Card } from "react-bootstrap";
 import TimeRangePicker from "@wojtekmaj/react-timerange-picker/dist/TimeRangePicker";
-import '@wojtekmaj/react-timerange-picker/dist/TimeRangePicker.css'
+import "@wojtekmaj/react-timerange-picker/dist/TimeRangePicker.css";
 
 function OperationalTime() {
-  const [value, setValue] = useState('08:00', '17:00')
+  const [value, setValue] = useState("08:00", "17:00");
 
   const handleAPI = () => {
-    const supervisorUrl = 'https://api-portal.herokuapp.com/api/v1/supervisor/parameter'
-    const adminUrl = 'https://api-portal.herokuapp.com/api/v1/admin/parameter'
-
-    
-  }
+    const supervisorUrl = "https://api-portal.herokuapp.com/api/v1/supervisor/parameter";
+    const adminUrl = "https://api-portal.herokuapp.com/api/v1/admin/parameter";
+  };
 
   return (
     <>
@@ -36,25 +34,17 @@ function OperationalTime() {
 
             {/* <canvas className="my-4 w-100 chartjs-render-monitor" id="myChart" width="2196" height="926" style="display: block; width: 1098px; height: 463px;"></canvas> */}
 
-            <h2 style={{paddingInline:'25rem'}}>Set Bank Operational Hour</h2>
-            
-            <Row className="align-items-center" style={{height:'70vh'}}>
-             <Col className="justify-content-center" style={{paddingInline:'30rem'}}>
-             <Card border="primary" style={{ width: '20rem', textAlign:'center' }}>
-               <Card.Header>Operational start - end time</Card.Header>
-               <Card.Body>
-                 <TimeRangePicker 
-                 onChange={setValue} 
-                 value={value} 
-                 disableClock={true}
-                 format='HH:mm'
-                 rangeDivider='Until'
-                 clearIcon={null}
-                 autoFocus={true}
-                 />
-               </Card.Body>
-             </Card>
-             </Col>
+            <h2 style={{ paddingInline: "25rem" }}>Set Bank Operational Hour</h2>
+
+            <Row className="align-items-center" style={{ height: "70vh" }}>
+              <Col className="justify-content-center" style={{ paddingInline: "30rem" }}>
+                <Card border="primary" style={{ width: "20rem", textAlign: "center" }}>
+                  <Card.Header>Operational start - end time</Card.Header>
+                  <Card.Body>
+                    <TimeRangePicker onChange={setValue} value={value} disableClock={true} format="HH:mm" rangeDivider="Until" clearIcon={null} autoFocus={true} />
+                  </Card.Body>
+                </Card>
+              </Col>
             </Row>
           </div>
         </div>

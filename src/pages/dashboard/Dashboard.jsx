@@ -3,7 +3,6 @@ import Header from "../../component/Header";
 import firebase from "firebase";
 import NavBar from "../../component/nav";
 import { Card, Row, Col } from "react-bootstrap";
-import {useParams} from 'react-router-dom'
 
 function Dashboard() {
   if (firebase.apps.length === 0) {
@@ -19,24 +18,24 @@ function Dashboard() {
     });
   }
 
-  var db = firebase.firestore()
-  const [data, setData] = useState([])
-  const {role} = useParams()
-  
-  const agentActive = async () =>{
-    await db.collection('isActive').onSnapshot((doc) =>{
+  var db = firebase.firestore();
+  const [data, setData] = useState([]);
+  const role = localStorage.getItem("ROLE");
+
+  const agentActive = async () => {
+    await db.collection("isActive").onSnapshot((doc) => {
       const agentDoc = doc.docs.map((doc) => {
         return { id: doc.id, ...doc.data() };
       });
 
-      console.log('agent status', agentDoc);
-      setData(agentDoc)
-    })
-  }
+      console.log("agent status", agentDoc);
+      setData(agentDoc);
+    });
+  };
 
   useEffect(() => {
     agentActive();
-    console.log(role)
+    console.log(role);
   }, []);
 
   return (
@@ -62,23 +61,22 @@ function Dashboard() {
 
             <h2>Agent Overview</h2>
 
-            <Row className="align-items-center" style={{height:'70vh'}}>
+            <Row className="align-items-center" style={{ height: "70vh" }}>
               {data?.map((item) => (
                 <>
-                <Col className="justify-content-center" style={{padding:'6rem'}}>
-                <Card border="primary" style={{width:'25rem', textAlign:'center'}}>
-                  <Card.Header>Agent Status {item?.agentNo}</Card.Header>
-                  <Card.Body style={{alignItems:'center'}}>
-                    <h4>Video Call Handled: {item?.VCHandled}</h4>
-                    <h4>In Call: {item?.inCall.toString()}</h4>
-                    <h4>Logged In: {item?.loggedIn.toString()}</h4>
-                  </Card.Body>
-                </Card>
-                </Col>
+                  <Col className="justify-content-center" style={{ padding: "6rem" }}>
+                    <Card border="primary" style={{ width: "25rem", textAlign: "center" }}>
+                      <Card.Header>Agent Status {item?.agentNo}</Card.Header>
+                      <Card.Body style={{ alignItems: "center" }}>
+                        <h4>Video Call Handled: {item?.VCHandled}</h4>
+                        <h4>In Call: {item?.inCall.toString()}</h4>
+                        <h4>Logged In: {item?.loggedIn.toString()}</h4>
+                      </Card.Body>
+                    </Card>
+                  </Col>
                 </>
               ))}
             </Row>
-
           </div>
         </div>
       </div>

@@ -15,6 +15,9 @@ import DescriptionRoundedIcon from "@material-ui/icons/DescriptionRounded";
 import CropFreeRoundedIcon from "@material-ui/icons/CropFreeRounded";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import reactRouterDom from "react-router-dom";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -51,13 +54,37 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function WebTheming() {
-  const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const [dataParameter, setdataParameter] = useState({
+    background: "",
+    box: "",
+    button: "",
+    percentage: 0,
+    title: "",
+    attributes: [""],
+    operationalEnd: 0,
+    operationalStart: 0,
+    percentageLiveness: 0,
+    percentageSimilarity: 0,
+  });
+  const role = localStorage.getItem("ROLE");
+  const Token = localStorage.getItem("Token");
+
+  const getData = async () => {
+    await axios
+      .get(`https://api-portal.herokuapp.com/api/v1/${role}/parameter`, { headers: { Authorization: `Bearer ${Token}` } })
+      .then((result) => setdataParameter(result.data.data))
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+  console.log("data", dataParameter);
   return (
     <>
       <Header />
@@ -77,7 +104,7 @@ function WebTheming() {
                     <Tab label="Box" icon={<DashboardRoundedIcon />} {...a11yProps(1)} />
                     <Tab label="Percentage" icon={<FingerprintRoundedIcon />} {...a11yProps(2)} />
                     <Tab label="title" icon={<SortByAlphaRoundedIcon />} {...a11yProps(3)} />
-                    <Tab label="button" icon={<CropFreeRoundedIcon t />} {...a11yProps(4)} />
+                    <Tab label="button" icon={<CropFreeRoundedIcon />} {...a11yProps(4)} />
                     <Tab label="attributes" icon={<DescriptionRoundedIcon />} {...a11yProps(5)} />
                   </Tabs>
                 </AppBar>

@@ -1,23 +1,14 @@
 import React from "react";
 import Header from "../../component/Header";
 import NavBar from "../../component/nav";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { Card } from "react-bootstrap";
 function PageLog() {
-  //   const [dataParameter, setdataParameter] = useState({
-  //     updatedAt: "2022-03-18T08:44:40.698Z",
-  //     background: "asdasd",
-  //     box: "asdasd",
-  //     button: "asdads",
-  //     percentage: 22,
-  //     title: "leperasd",
-  //     attributes: ["asdasd"],
-  //     operationalEnd: 17,
-  //     operationalStart: 5,
-  //     username: "Nathanael",
-  //   });
   //   [danger, primary];
 
   //   setdataColor(random);
+
   return (
     <>
       <Header />
