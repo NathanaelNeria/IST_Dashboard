@@ -3,11 +3,13 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { Button, Spinner } from "react-bootstrap";
 import logo from "../assets/istlogo.jpg";
+
 function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [loggedin, setLoggedin] = useState(true);
+  var role
   var OK = "";
   var Token = "";
   const history = useHistory();
@@ -47,10 +49,12 @@ function LoginForm() {
       const parsed = JSON.parse(json)
       OK = parsed.message
       console.log(OK)
+      role = parsed.data.role
+      console.log('var role', role)
     })
 
     if(OK === 'OK'){
-      history.push('/dashboard')
+      window.location.href = '/dashboard/' + role
     }
   };
   console.log(loading);

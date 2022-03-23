@@ -8,6 +8,13 @@ import '@wojtekmaj/react-timerange-picker/dist/TimeRangePicker.css'
 function OperationalTime() {
   const [value, setValue] = useState('08:00', '17:00')
 
+  const handleAPI = () => {
+    const supervisorUrl = 'https://api-portal.herokuapp.com/api/v1/supervisor/parameter'
+    const adminUrl = 'https://api-portal.herokuapp.com/api/v1/admin/parameter'
+
+    
+  }
+
   return (
     <>
       <Header />
@@ -29,11 +36,11 @@ function OperationalTime() {
 
             {/* <canvas className="my-4 w-100 chartjs-render-monitor" id="myChart" width="2196" height="926" style="display: block; width: 1098px; height: 463px;"></canvas> */}
 
-            <h2>Set Bank Operational Hour</h2>
+            <h2 style={{paddingInline:'25rem'}}>Set Bank Operational Hour</h2>
             
-            <Row className="justify-content-center">
-             <Col>
-             <Card border="primary" style={{ width: '15rem', alignItems:'center' }}>
+            <Row className="align-items-center" style={{height:'70vh'}}>
+             <Col className="justify-content-center" style={{paddingInline:'30rem'}}>
+             <Card border="primary" style={{ width: '20rem', textAlign:'center' }}>
                <Card.Header>Operational start - end time</Card.Header>
                <Card.Body>
                  <TimeRangePicker 

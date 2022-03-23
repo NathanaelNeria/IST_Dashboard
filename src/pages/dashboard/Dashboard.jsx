@@ -3,6 +3,7 @@ import Header from "../../component/Header";
 import firebase from "firebase";
 import NavBar from "../../component/nav";
 import { Card, Row, Col } from "react-bootstrap";
+import {useParams} from 'react-router-dom'
 
 function Dashboard() {
   if (firebase.apps.length === 0) {
@@ -20,6 +21,7 @@ function Dashboard() {
 
   var db = firebase.firestore()
   const [data, setData] = useState([])
+  const {role} = useParams()
   
   const agentActive = async () =>{
     await db.collection('isActive').onSnapshot((doc) =>{
@@ -34,6 +36,7 @@ function Dashboard() {
 
   useEffect(() => {
     agentActive();
+    console.log(role)
   }, []);
 
   return (

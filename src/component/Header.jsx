@@ -1,24 +1,25 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import {useHistory} from 'react-router-dom'
 import icon from '../assets/ISTicon.png'
 
 function Header() {
   const history = useHistory()
+  const {role} = useParams()
 
-  const handleSignOut = () => {
-    history.push('/')
+  const handleHome = () => {
+    history.push('/dashboard/' + role)
   }
+
 
   return (
     <>
       <div className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 mb-2 shadow">
-        <Link to='/dashboard'>
-        <img src={icon} alt='' width='50px' height='50px'/>
-        <a className="navbar-brand col-md-3 col-lg-2 me-0 px-3">
+        <img src={icon} alt='' width='50px' height='50px' onClick={handleHome}/>
+        <a className="navbar-brand col-md-3 col-lg-2 me-0 px-3" onClick={handleHome}>
           IST Dashboard
         </a>
-        </Link>
         <button className="navbar-toggler position-absolute d-md-none collapsed" 
         type="button" 
         data-bs-toggle="collapse" 
