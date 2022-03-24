@@ -16,7 +16,7 @@ function PageLog() {
   useEffect(() => {
     getData();
   }, []);
-  console.log("dataLog>>>>>>>>>>>>>>", dataLog);
+  console.log("dataLog>>>>>>>>>>>>>>", dataLog.data);
   //   [danger, primary];
 
   //   setdataColor(random);
@@ -33,19 +33,20 @@ function PageLog() {
             </div>
             <h2>Log Admin</h2>
             <div className="row d-flex">
-              <div className="col">
-                {dataLog.map((item) => (
-                  <Card border="primary">
-                    <Card.Header>Updated by: {item.editedBy}</Card.Header>
+              <div className="col d-flex  flex-column">
+                {dataLog?.data?.map((item) => (
+                  <Card border="primary" className="mb-5" style={{ width: "10rem" }}>
+                    <Card.Header>Updated by:{item[0]?.editedBy} </Card.Header>
                     <Card.Body>
                       <Card.Title>
-                        {/* <p>updatedAt: {item.updatedAt}</p>
-                        <p>background: {item.background}</p>
-                        <p> box: {item.box}</p>
-                        <p>title: {item.title}</p>
-                        <p>percentage: {item.percentage}</p>
-                        <p>percentageLiveness: {item.percentageLiveness}</p>
-                        <p>percentageSimilarity: {item.percentageSimilarity}</p> */}
+                        <p>updatedAt:{item[1]?.updatedAt} </p>
+                        <p>background: {item[1]?.background}</p>
+                        <p> box: {item[1]?.box}</p>
+                        <p> button: {item[1]?.button}</p>
+                        <p>title: {item[1]?.title}</p>
+                        <p>percentage: {item[1]?.percentage}</p>
+                        <p>percentageLiveness: {item[1]?.percentageLiveness}</p>
+                        <p>percentageSimilarity: {item[1]?.percentageSimilarity}</p>
                       </Card.Title>
                     </Card.Body>
                   </Card>
