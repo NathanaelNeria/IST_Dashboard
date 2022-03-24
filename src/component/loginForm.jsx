@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { Spinner } from "react-bootstrap";
 
 function LoginForm() {
   const [username, setUsername] = useState('')
@@ -22,6 +23,7 @@ function LoginForm() {
       Token = parsed.data.token
       console.log("login", Token);
     })
+  
 
     handleLogin()
   }
@@ -37,8 +39,8 @@ function LoginForm() {
     })
 
     if(OK === 'OK'){
-      // history.push('/dashboard')
-      console.log("ok")
+      history.push('/dashboard')
+      // console.log("ok")
     }
     else{
       setLoading(false)
@@ -49,7 +51,7 @@ function LoginForm() {
   return (
     <>
       <form>
-        <img className="mb-4" src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57" />
+        <img className="mb-4" src="/assets/istlogo.jpg" alt="" width="72" height="57" />
         <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
 
         <div className="form-floating">
@@ -66,7 +68,11 @@ function LoginForm() {
             <input type="checkbox" value="remember-me" /> Remember me
           </label>
         </div>
-        <button className="w-100 btn btn-lg btn-primary" type="submit" onClick={handleToken}>
+        <button type="button" className="w-100 btn btn-lg btn-primary" 
+        onClick={handleToken}
+        // disabled={loading}
+        >
+          {loading && (<Spinner size="sm" aria-hidden="true"/>)}
           Sign in
         </button>
         <p className="mt-5 mb-3 text-muted">© 2017–2021</p>
