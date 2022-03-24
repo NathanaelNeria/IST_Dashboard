@@ -5,6 +5,18 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Card } from "react-bootstrap";
 function PageLog() {
+  const [dataLog, setdataLog] = useState([]);
+
+  const getData = async () => {
+    await axios
+      .get(`https://api-portal.herokuapp.com/api/v1/log`)
+      .then((result) => setdataLog(result.data))
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+  console.log("dataLog>>>>>>>>>>>>>>", dataLog);
   //   [danger, primary];
 
   //   setdataColor(random);
@@ -22,85 +34,22 @@ function PageLog() {
             <h2>Log Admin</h2>
             <div className="row d-flex">
               <div className="col">
-                <Card border="primary">
-                  <Card.Header>Updated by: [Admin1]</Card.Header>
-                  <Card.Body>
-                    <Card.Title>
-                      <p>updatedAt: '2022-03-18T08:44:40.698Z'</p>
-                      <p>background: asdasd</p>
-                      <p> box: asdasd</p>
-                      <p>title: leperasd</p>
-                      <p>operationalEnd: 17.00</p>
-                      <p>operationalStart: 09.30</p>
-                    </Card.Title>
-                  </Card.Body>
-                </Card>
-              </div>
-
-              <div className="col">
-                <Card border="info">
-                  <Card.Header>Updated by: [Admin1]</Card.Header>
-                  <Card.Body>
-                    <Card.Title>
-                      <p>updatedAt: '2022-03-18T08:44:40.698Z'</p>
-                      <p>background: asdasd</p>
-                      <p> box: asdasd</p>
-                      <p>title: leperasd</p>
-                    </Card.Title>
-                  </Card.Body>
-                </Card>
-              </div>
-              <div className="col">
-                <Card border="primary">
-                  <Card.Header>Updated by: [Admin1]</Card.Header>
-                  <Card.Body>
-                    <Card.Title>
-                      <p>updatedAt: '2022-03-18T08:44:40.698Z'</p>
-                      <p>background: asdasd</p>
-                      <p> box: asdasd</p>
-                      <p>title: leperasd</p>
-                    </Card.Title>
-                  </Card.Body>
-                </Card>
-              </div>
-              <div className="col">
-                <Card border="danger">
-                  <Card.Header>Updated by: [Admin1]</Card.Header>
-                  <Card.Body>
-                    <Card.Title>
-                      <p>updatedAt: '2022-03-18T08:44:40.698Z'</p>
-                      <p>background: asdasd</p>
-                      <p> box: asdasd</p>
-                      <p>title: leperasd</p>
-                    </Card.Title>
-                  </Card.Body>
-                </Card>
-              </div>
-              <div className="col">
-                <Card border="info">
-                  <Card.Header>Updated by: [Admin1]</Card.Header>
-                  <Card.Body>
-                    <Card.Title>
-                      <p>updatedAt: '2022-03-18T08:44:40.698Z'</p>
-                      <p>background: asdasd</p>
-                      <p> box: asdasd</p>
-                      <p>title: leperasd</p>
-                    </Card.Title>
-                  </Card.Body>
-                </Card>
-              </div>
-              <div className="col">
-                <Card border="warning">
-                  <Card.Header>Updated by: [Admin1]</Card.Header>
-                  <Card.Body>
-                    <Card.Title>
-                      <p>updatedAt: '2022-03-18T08:44:40.698Z'</p>
-                      <p>background: asdasd</p>
-                      <p> box: asdasd</p>
-                      <p>title: leperasd</p>
-                    </Card.Title>
-                  </Card.Body>
-                </Card>
+                {dataLog.map((item) => (
+                  <Card border="primary">
+                    <Card.Header>Updated by: {item.editedBy}</Card.Header>
+                    <Card.Body>
+                      <Card.Title>
+                        {/* <p>updatedAt: {item.updatedAt}</p>
+                        <p>background: {item.background}</p>
+                        <p> box: {item.box}</p>
+                        <p>title: {item.title}</p>
+                        <p>percentage: {item.percentage}</p>
+                        <p>percentageLiveness: {item.percentageLiveness}</p>
+                        <p>percentageSimilarity: {item.percentageSimilarity}</p> */}
+                      </Card.Title>
+                    </Card.Body>
+                  </Card>
+                ))}
               </div>
             </div>
           </div>
