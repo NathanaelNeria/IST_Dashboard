@@ -1,34 +1,63 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import 'bootstrap/dist/css/bootstrap.min.css'
-import {Link, NavLink} from 'react-router-dom'
-import Login from "../pages/Login";
-import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import * as FcIcons from "react-icons/fc";
+import { useParams } from "react-router-dom";
 
-function NavBar(){
-    return(
-    <div className="container-fluid">
-    <Navbar bg="light" expand="lg">
-      <Container>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link as={Link} to='/home'>Home</Nav.Link>
-            <Nav.Link as={Link} to='/login'>Login</Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-            </NavDropdown>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
-  </div>
-    )
+function NavBar() {
+  const { role } = useParams();
+
+  const handleRoute = (route) => {
+    window.location.href = "/" + route + "/" + role;
+  };
+
+  return (
+    <>
+      <nav id="sidebarMenu" className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+        <div className="position-sticky pt-3">
+          <ul className="nav flex-column d-flex align-content-center align-item-center">
+            <li className="nav-item ">
+              <Link to={"/dashboard"} style={{ textDecoration: "none" }}>
+                <FcIcons.FcHome style={{ height: "80px", width: "80px" }} />
+                <p style={{ color: "#0072A0" }}> Dashboard</p>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to={"/webTheming"} style={{ textDecoration: "none" }}>
+                <FcIcons.FcMindMap style={{ height: "80px", width: "80px" }} />
+                <p style={{ color: "#0072A0" }}> WebTheming</p>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to={"/operationalTime"} style={{ textDecoration: "none" }}>
+                <FcIcons.FcClock style={{ height: "80px", width: "80px" }} />
+                <p style={{ color: "#0072A0" }}> Operational Time</p>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to={"/roomVideoCall"} style={{ textDecoration: "none" }}>
+                <FcIcons.FcCustomerSupport style={{ height: "80px", width: "80px" }} />
+                <p style={{ color: "#0072A0" }}> Rooms Video Call</p>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to={"/pageLog"} style={{ textDecoration: "none" }}>
+                <FcIcons.FcDataConfiguration style={{ height: "80px", width: "80px" }} />
+                <p style={{ color: "#0072A0" }}> Admin Log</p>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to={"/adminManagement"} style={{ textDecoration: "none" }}>
+                <FcIcons.FcConferenceCall style={{ height: "80px", width: "80px" }} />
+                <p style={{ color: "#0072A0" }}> Admin Management</p>
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </>
+  );
 }
 
-export default NavBar
+export default NavBar;

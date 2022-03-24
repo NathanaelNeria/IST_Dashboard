@@ -1,28 +1,36 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import icon from "../assets/ISTicon.png";
 
 function Header() {
-  const history = useHistory()
+  const { role } = useParams();
 
-  const handleSignout = () =>{
-    history.push('/')
-  }
+  const setLocalStorage = () => {
+    localStorage.setItem("Token", null);
+    localStorage.setItem("USERID", null);
+    localStorage.setItem("ROLE", null);
+    localStorage.setItem("USERNAME", null);
+  };
 
   return (
     <>
       <div className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 mb-2 shadow">
-        <a className="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">
-         IST Dashboard
-        </a>
+        <Link to={"/dashboard/" + role}>
+          <img src={icon} alt="" width="50px" height="50px" />
+          <a className="navbar-brand col-md-3 col-lg-2 me-0 px-3">IST Dashboard</a>
+        </Link>
         <button className="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
-        <input className="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search" />
+
         <div className="navbar-nav">
           <div className="nav-item text-nowrap">
-            <a className="nav-link px-3" onClick={handleSignout}>
-              Sign out
-            </a>
+            <Link to="/">
+              <a className="nav-link px-3" onClick={setLocalStorage}>
+                Sign out
+              </a>
+            </Link>
           </div>
         </div>
       </div>
