@@ -25,7 +25,7 @@ function OperationalTime() {
     axios.post(Url, {headers: {Authorization: `Bearer ${token}`}}, {body: {operationalStart: start, operationalEnd: end}})
     .then((res) => {
       console.log(res.data);
-    })
+    }).catch((e) => console.log(e.message))
   };
 
   return (

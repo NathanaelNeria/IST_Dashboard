@@ -11,13 +11,14 @@ import DashboardRoundedIcon from "@material-ui/icons/DashboardRounded";
 import AspectRatioRoundedIcon from "@material-ui/icons/AspectRatioRounded";
 import FingerprintRoundedIcon from "@material-ui/icons/FingerprintRounded";
 import SortByAlphaRoundedIcon from "@material-ui/icons/SortByAlphaRounded";
-import DescriptionRoundedIcon from "@material-ui/icons/DescriptionRounded";
 import CropFreeRoundedIcon from "@material-ui/icons/CropFreeRounded";
+import NotInterestedIcon from '@material-ui/icons/NotInterested';
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import reactRouterDom from "react-router-dom";
+import { Button, Form } from "react-bootstrap";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -75,6 +76,12 @@ function WebTheming() {
   const role = localStorage.getItem("ROLE");
   const Token = localStorage.getItem("Token");
 
+  const switchValue = [0,1]
+
+  const handleSwitch = () => {
+    console.log(switchValue);
+  }
+
   const getData = async () => {
     await axios
       .get(`https://api-portal.herokuapp.com/api/v1/${role}/parameter`, { headers: { Authorization: `Bearer ${Token}` } })
@@ -105,7 +112,7 @@ function WebTheming() {
                     <Tab label="Percentage" icon={<FingerprintRoundedIcon />} {...a11yProps(2)} />
                     <Tab label="title" icon={<SortByAlphaRoundedIcon />} {...a11yProps(3)} />
                     <Tab label="button" icon={<CropFreeRoundedIcon />} {...a11yProps(4)} />
-                    <Tab label="attributes" icon={<DescriptionRoundedIcon />} {...a11yProps(5)} />
+                    <Tab label="Disable Button" icon={<NotInterestedIcon/>} {...a11yProps(5)} />
                   </Tabs>
                 </AppBar>
                 <TabPanel value={value} index={0} style={{ display: "flex", justifyContent: "center" }}>
@@ -115,7 +122,20 @@ function WebTheming() {
                   <ColorPicker />
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                  Item Three
+                <Form>
+                  <Form.Group className="mb-3" controlId="liveness">
+                    <Form.Label>Face Liveness Percentage</Form.Label>
+                    <Form.Control type="number" placeholder="75" style={{width: '5rem'}}/>                
+                  </Form.Group>
+
+                  <Form.Group className="mb-3" controlId="similarity">
+                    <Form.Label>Face Recognition Similarity percentage</Form.Label>
+                    <Form.Control type="number" placeholder="75" style={{width: '5rem'}}/>
+                  </Form.Group>
+                  <Button variant="primary" type="button">
+                    Confirm
+                  </Button>
+                </Form>
                 </TabPanel>
                 <TabPanel value={value} index={3} style={{ display: "flex", justifyContent: "center" }}>
                   <label htmlFor="Button">Web Title :</label>
@@ -125,7 +145,19 @@ function WebTheming() {
                   <ColorPicker />
                 </TabPanel>
                 <TabPanel value={value} index={5}>
-                  Item Six
+                <Form>
+                  <Form.Check 
+                    type="switch"
+                    id="create-call-switch"
+                    label="Disable Agent Create Call Button"
+                  />
+                  <Form.Check 
+                    type="switch"
+                    label="Disable Mobile End Call Button"
+                    id="end-call-switch"
+                    // checked={}
+                  />
+                </Form>
                 </TabPanel>
                 <TabPanel value={value} index={6}>
                   Item Seven
