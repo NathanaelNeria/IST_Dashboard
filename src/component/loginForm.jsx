@@ -54,7 +54,7 @@ function LoginForm() {
     })
 
     if(OK === 'OK'){
-      window.location.href = '/dashboard/' + role
+      window.location.href = '/dashboard/' + Token + '/' + role
     }
   };
   console.log(loading);

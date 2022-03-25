@@ -4,15 +4,18 @@ import NavBar from "../../component/nav";
 import {Row, Col, Card} from 'react-bootstrap'
 import TimeRangePicker from "@wojtekmaj/react-timerange-picker/dist/TimeRangePicker";
 import '@wojtekmaj/react-timerange-picker/dist/TimeRangePicker.css'
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import axios from "axios";
 
 function OperationalTime() {
   const [value, setValue] = useState('08:00', '17:00')
+  const {role, token} = useParams()
 
   const handleAPI = () => {
     const supervisorUrl = 'https://api-portal.herokuapp.com/api/v1/supervisor/parameter'
     const adminUrl = 'https://api-portal.herokuapp.com/api/v1/admin/parameter'
 
-    
+    axios.post(adminUrl, {headers:{Authorization:`Bearer ${token}`}}, )
   }
 
   return (
