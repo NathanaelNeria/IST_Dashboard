@@ -16,7 +16,7 @@ function PageLog() {
   useEffect(() => {
     getData();
   }, []);
-  console.log("dataLog>>>>>>>>>>>>>>", dataLog.data);
+  console.log("dataLog>>>>>>>>>>>>>>", dataLog?.data);
   //   [danger, primary];
 
   //   setdataColor(random);
@@ -32,10 +32,10 @@ function PageLog() {
               <h1 className="h2">Logs Data</h1>
             </div>
             <h2>Log Admin</h2>
-            <div className="row d-flex">
-              <div className="col d-flex  flex-column">
+            <div className="row">
+              <div className="col ">
                 {dataLog?.data?.map((item) => (
-                  <Card border="primary" className="mb-5" style={{ width: "10rem" }}>
+                  <Card border="primary" className="mb-5">
                     <Card.Header>Updated by:{item[0]?.editedBy} </Card.Header>
                     <Card.Body>
                       <Card.Title>
