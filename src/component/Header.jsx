@@ -1,35 +1,35 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import icon from '../assets/ISTicon.png'
+import icon from "../assets/ISTicon.png";
 
 function Header() {
-  const {role} = useParams()
+  const { role } = useParams();
 
+  const setLocalStorage = () => {
+    localStorage.setItem("Token", null);
+    localStorage.setItem("USERID", null);
+    localStorage.setItem("ROLE", null);
+    localStorage.setItem("USERNAME", null);
+  };
 
   return (
     <>
       <div className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 mb-2 shadow">
-        <Link to={'/dashboard/' + role}>
-        <img src={icon} alt='' width='50px' height='50px'/>
-        <a className="navbar-brand col-md-3 col-lg-2 me-0 px-3">
-          IST Dashboard
-        </a>
+        <Link to={"/dashboard/" + role}>
+          <img src={icon} alt="" width="50px" height="50px" />
+          <a className="navbar-brand col-md-3 col-lg-2 me-0 px-3">IST Dashboard</a>
         </Link>
-        <button className="navbar-toggler position-absolute d-md-none collapsed" 
-        type="button" 
-        data-bs-toggle="collapse" 
-        data-bs-target="#sidebarMenu" 
-        aria-controls="sidebarMenu" 
-        aria-expanded="false" 
-        aria-label="Toggle navigation">
+        <button className="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
 
         <div className="navbar-nav">
           <div className="nav-item text-nowrap">
             <Link to="/">
-              <a className="nav-link px-3">Sign out</a>
+              <a className="nav-link px-3" onClick={setLocalStorage}>
+                Sign out
+              </a>
             </Link>
           </div>
         </div>

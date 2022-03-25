@@ -1,22 +1,36 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
 import Header from "../../component/Header";
 import NavBar from "../../component/nav";
-import {Row, Col, Card} from 'react-bootstrap'
+import { Row, Col, Card, Button } from "react-bootstrap";
 import TimeRangePicker from "@wojtekmaj/react-timerange-picker/dist/TimeRangePicker";
-import '@wojtekmaj/react-timerange-picker/dist/TimeRangePicker.css'
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import "@wojtekmaj/react-timerange-picker/dist/TimeRangePicker.css";
 import axios from "axios";
 
 function OperationalTime() {
-  const [value, setValue] = useState('08:00', '17:00')
-  const {role, token} = useParams()
+  const [value, setValue] = useState(['08:00', '17:00']);
 
   const handleAPI = () => {
-    const supervisorUrl = 'https://api-portal.herokuapp.com/api/v1/supervisor/parameter'
-    const adminUrl = 'https://api-portal.herokuapp.com/api/v1/admin/parameter'
+    const role = localStorage.getItem("ROLE");
+    const token = localStorage.getItem("Token");
+    const Url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`;
 
-    axios.post(adminUrl, {headers:{Authorization:`Bearer ${token}`}}, )
-  }
+    const startHour = parseFloat(value[0][0] + value[0][1])
+    const startMin = parseFloat((value[0][3] + value[0][4])/60)
+    const endHour = parseFloat((value[1][0] + value[1][1]))
+    const endMin = parseFloat((value[1][3] + value[1][4])/60)
+
+    const start = startHour + startMin
+    const end = endHour + endMin
+
+    console.log(start, end)
+
+    axios
+      .post(Url, {operationalEnd: end, operationalStart:start},  { headers: { Authorization: `Bearer ${token}` } })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <>
@@ -39,25 +53,21 @@ function OperationalTime() {
 
             {/* <canvas className="my-4 w-100 chartjs-render-monitor" id="myChart" width="2196" height="926" style="display: block; width: 1098px; height: 463px;"></canvas> */}
 
-            <h2 style={{paddingInline:'25rem'}}>Set Bank Operational Hour</h2>
-            
-            <Row className="align-items-center" style={{height:'70vh'}}>
-             <Col className="justify-content-center" style={{paddingInline:'30rem'}}>
-             <Card border="primary" style={{ width: '20rem', textAlign:'center' }}>
-               <Card.Header>Operational start - end time</Card.Header>
-               <Card.Body>
-                 <TimeRangePicker 
-                 onChange={setValue} 
-                 value={value} 
-                 disableClock={true}
-                 format='HH:mm'
-                 rangeDivider='Until'
-                 clearIcon={null}
-                 autoFocus={true}
-                 />
-               </Card.Body>
-             </Card>
-             </Col>
+            <h2 style={{ paddingInline: "25rem" }}>Set Bank Operational Hour</h2>
+
+            <Row className="align-items-center" style={{ height: "70vh" }}>
+              <Col className="justify-content-center" style={{ paddingInline: "30rem" }}>
+                <Card border="primary" style={{ width: "20rem", textAlign: "center" }}>
+                  <Card.Header>Operational start - end time</Card.Header>
+                  <Card.Body>
+                    <TimeRangePicker onChange={setValue} value={value} disableClock={true} format="HH:mm" rangeDivider="Until" clearIcon={null} autoFocus={true} />
+                    <br />
+                    <Button variant="primary" onClick={handleAPI}>
+                      Confirm
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </Col>
             </Row>
           </div>
         </div>

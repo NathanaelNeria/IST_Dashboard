@@ -11,10 +11,14 @@ import DashboardRoundedIcon from "@material-ui/icons/DashboardRounded";
 import AspectRatioRoundedIcon from "@material-ui/icons/AspectRatioRounded";
 import FingerprintRoundedIcon from "@material-ui/icons/FingerprintRounded";
 import SortByAlphaRoundedIcon from "@material-ui/icons/SortByAlphaRounded";
-import DescriptionRoundedIcon from "@material-ui/icons/DescriptionRounded";
 import CropFreeRoundedIcon from "@material-ui/icons/CropFreeRounded";
+import NotInterestedIcon from '@material-ui/icons/NotInterested';
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import reactRouterDom from "react-router-dom";
+import { Button, Form } from "react-bootstrap";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -51,13 +55,52 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function WebTheming() {
-  const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const [dataParameter, setdataParameter] = useState({
+    background: "",
+    box: "",
+    button: "",
+    percentage: 0,
+    title: "",
+    attributes: [""],
+    operationalEnd: 0,
+    operationalStart: 0,
+    percentageLiveness: 0,
+    percentageSimilarity: 0,
+  });
+  const role = localStorage.getItem("ROLE");
+  const Token = localStorage.getItem("Token");
+
+  const [liveness, setLiveness] = useState()
+  const [similarity, setSimilarity] = useState()
+
+  const handlePercentage = () =>{
+    const url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`
+
+    console.log(liveness, similarity)
+
+    axios.post(url, {percentageLiveness: liveness, percentageSimilarity: similarity}, { headers: { Authorization: `Bearer ${Token}` } })
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((err) => console.log(err));
+  }
+
+  const getData = async () => {
+    await axios
+      .get(`https://api-portal.herokuapp.com/api/v1/${role}/parameter`, { headers: { Authorization: `Bearer ${Token}` } })
+      .then((result) => setdataParameter(result.data.data))
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+  console.log("data", dataParameter);
   return (
     <>
       <Header />
@@ -77,8 +120,8 @@ function WebTheming() {
                     <Tab label="Box" icon={<DashboardRoundedIcon />} {...a11yProps(1)} />
                     <Tab label="Percentage" icon={<FingerprintRoundedIcon />} {...a11yProps(2)} />
                     <Tab label="title" icon={<SortByAlphaRoundedIcon />} {...a11yProps(3)} />
-                    <Tab label="button" icon={<CropFreeRoundedIcon t />} {...a11yProps(4)} />
-                    <Tab label="attributes" icon={<DescriptionRoundedIcon />} {...a11yProps(5)} />
+                    <Tab label="button" icon={<CropFreeRoundedIcon />} {...a11yProps(4)} />
+                    <Tab label="Disable Button" icon={<NotInterestedIcon/>} {...a11yProps(5)} />
                   </Tabs>
                 </AppBar>
                 <TabPanel value={value} index={0} style={{ display: "flex", justifyContent: "center" }}>
@@ -88,7 +131,20 @@ function WebTheming() {
                   <ColorPicker />
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                  Item Three
+                <Form>
+                  <Form.Group className="mb-3" controlId="liveness">
+                    <Form.Label>Face Liveness Percentage</Form.Label>
+                    <Form.Control type="number" placeholder="75" style={{width: '5rem'}} onChange={(e) => setLiveness(e.target.value)} />                
+                  </Form.Group>
+
+                  <Form.Group className="mb-3" controlId="similarity">
+                    <Form.Label>Face Recognition Similarity percentage</Form.Label>
+                    <Form.Control type="number" placeholder="75" style={{width: '5rem'}} onChange={(e) => setSimilarity(e.target.value)} />
+                  </Form.Group>
+                  <Button variant="primary" type="button" onClick={handlePercentage}>
+                    Confirm
+                  </Button>
+                </Form>
                 </TabPanel>
                 <TabPanel value={value} index={3} style={{ display: "flex", justifyContent: "center" }}>
                   <label htmlFor="Button">Web Title :</label>
@@ -98,7 +154,19 @@ function WebTheming() {
                   <ColorPicker />
                 </TabPanel>
                 <TabPanel value={value} index={5}>
-                  Item Six
+                <Form>
+                  <Form.Check 
+                    type="switch"
+                    id="create-call-switch"
+                    label="Disable Agent Create Call Button"
+                  />
+                  <Form.Check 
+                    type="switch"
+                    label="Disable Mobile End Call Button"
+                    id="end-call-switch"
+                    // checked={}
+                  />
+                </Form>
                 </TabPanel>
                 <TabPanel value={value} index={6}>
                   Item Seven
