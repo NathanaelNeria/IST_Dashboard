@@ -5,6 +5,18 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Card } from "react-bootstrap";
 function PageLog() {
+  const [dataLog, setdataLog] = useState([]);
+
+  const getData = async () => {
+    await axios
+      .get(`https://api-portal.herokuapp.com/api/v1/log`)
+      .then((result) => setdataLog(result.data))
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+  console.log("dataLog>>>>>>>>>>>>>>", dataLog.data);
   //   [danger, primary];
 
   //   setdataColor(random);
@@ -21,86 +33,24 @@ function PageLog() {
             </div>
             <h2>Log Admin</h2>
             <div className="row d-flex">
-              <div className="col">
-                <Card border="primary">
-                  <Card.Header>Updated by: [Admin1]</Card.Header>
-                  <Card.Body>
-                    <Card.Title>
-                      <p>updatedAt: '2022-03-18T08:44:40.698Z'</p>
-                      <p>background: asdasd</p>
-                      <p> box: asdasd</p>
-                      <p>title: leperasd</p>
-                      <p>operationalEnd: 17.00</p>
-                      <p>operationalStart: 09.30</p>
-                    </Card.Title>
-                  </Card.Body>
-                </Card>
-              </div>
-
-              <div className="col">
-                <Card border="info">
-                  <Card.Header>Updated by: [Admin1]</Card.Header>
-                  <Card.Body>
-                    <Card.Title>
-                      <p>updatedAt: '2022-03-18T08:44:40.698Z'</p>
-                      <p>background: asdasd</p>
-                      <p> box: asdasd</p>
-                      <p>title: leperasd</p>
-                    </Card.Title>
-                  </Card.Body>
-                </Card>
-              </div>
-              <div className="col">
-                <Card border="primary">
-                  <Card.Header>Updated by: [Admin1]</Card.Header>
-                  <Card.Body>
-                    <Card.Title>
-                      <p>updatedAt: '2022-03-18T08:44:40.698Z'</p>
-                      <p>background: asdasd</p>
-                      <p> box: asdasd</p>
-                      <p>title: leperasd</p>
-                    </Card.Title>
-                  </Card.Body>
-                </Card>
-              </div>
-              <div className="col">
-                <Card border="danger">
-                  <Card.Header>Updated by: [Admin1]</Card.Header>
-                  <Card.Body>
-                    <Card.Title>
-                      <p>updatedAt: '2022-03-18T08:44:40.698Z'</p>
-                      <p>background: asdasd</p>
-                      <p> box: asdasd</p>
-                      <p>title: leperasd</p>
-                    </Card.Title>
-                  </Card.Body>
-                </Card>
-              </div>
-              <div className="col">
-                <Card border="info">
-                  <Card.Header>Updated by: [Admin1]</Card.Header>
-                  <Card.Body>
-                    <Card.Title>
-                      <p>updatedAt: '2022-03-18T08:44:40.698Z'</p>
-                      <p>background: asdasd</p>
-                      <p> box: asdasd</p>
-                      <p>title: leperasd</p>
-                    </Card.Title>
-                  </Card.Body>
-                </Card>
-              </div>
-              <div className="col">
-                <Card border="warning">
-                  <Card.Header>Updated by: [Admin1]</Card.Header>
-                  <Card.Body>
-                    <Card.Title>
-                      <p>updatedAt: '2022-03-18T08:44:40.698Z'</p>
-                      <p>background: asdasd</p>
-                      <p> box: asdasd</p>
-                      <p>title: leperasd</p>
-                    </Card.Title>
-                  </Card.Body>
-                </Card>
+              <div className="col d-flex  flex-column">
+                {dataLog?.data?.map((item) => (
+                  <Card border="primary" className="mb-5" style={{ width: "10rem" }}>
+                    <Card.Header>Updated by:{item[0]?.editedBy} </Card.Header>
+                    <Card.Body>
+                      <Card.Title>
+                        <p>updatedAt:{item[1]?.updatedAt} </p>
+                        <p>background: {item[1]?.background}</p>
+                        <p> box: {item[1]?.box}</p>
+                        <p> button: {item[1]?.button}</p>
+                        <p>title: {item[1]?.title}</p>
+                        <p>percentage: {item[1]?.percentage}</p>
+                        <p>percentageLiveness: {item[1]?.percentageLiveness}</p>
+                        <p>percentageSimilarity: {item[1]?.percentageSimilarity}</p>
+                      </Card.Title>
+                    </Card.Body>
+                  </Card>
+                ))}
               </div>
             </div>
           </div>

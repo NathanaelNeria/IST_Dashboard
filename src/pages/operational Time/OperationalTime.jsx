@@ -8,24 +8,20 @@ import axios from "axios";
 
 function OperationalTime() {
   const [value, setValue] = useState(["08:00", "17:00"]);
-    
+
   const handleAPI = () => {
-    const role = localStorage.getItem('ROLE')
-    const token = localStorage.getItem('Token')
+    const role = localStorage.getItem("ROLE");
+    const token = localStorage.getItem("Token");
     const Url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`;
 
-    let start
-    let end
+    console.log(value);
 
-    start = value[0]
-    end = value[1]
-
-    console.log(start, end, token);
-
-    axios.post(Url, {headers: {Authorization: `Bearer ${token}`}}, {body: {operationalStart: start, operationalEnd: end}})
-    .then((res) => {
-      console.log(res.data);
-    }).catch((e) => console.log(e.message))
+    axios
+      .post(Url, { body: { operationalStart: value[0], operationalEnd: value[1] } }, { headers: { Authorization: `Bearer ${token}` } })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -56,8 +52,11 @@ function OperationalTime() {
                 <Card border="primary" style={{ width: "20rem", textAlign: "center" }}>
                   <Card.Header>Operational start - end time</Card.Header>
                   <Card.Body>
-                    <TimeRangePicker onChange={setValue} value={value} disableClock={true} format="HH:mm" rangeDivider="Until" clearIcon={null} autoFocus={true} /><br/>
-                    <Button variant='primary' onClick={handleAPI}>Confirm</Button>
+                    <TimeRangePicker onChange={setValue} value={value} disableClock={true} format="HH:mm" rangeDivider="Until" clearIcon={null} autoFocus={true} />
+                    <br />
+                    <Button variant="primary" onClick={handleAPI}>
+                      Confirm
+                    </Button>
                   </Card.Body>
                 </Card>
               </Col>
