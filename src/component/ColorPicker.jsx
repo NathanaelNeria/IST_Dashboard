@@ -35,8 +35,8 @@ class ColorPicker extends React.Component {
     const styles = reactCSS({
       default: {
         color: {
-          width: "80rem",
-          height: "20rem",
+          width: "30rem",
+          height: "15rem",
           borderRadius: "3px",
           background: `rgba(${this.state.color.r}, ${this.state.color.g}, ${this.state.color.b}, ${this.state.color.a})`,
         },

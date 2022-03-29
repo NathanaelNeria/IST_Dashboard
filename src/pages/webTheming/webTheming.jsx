@@ -65,7 +65,6 @@ function WebTheming() {
     background: "",
     box: "",
     button: "",
-    percentage: 0,
     title: "",
     attributes: [""],
     operationalEnd: 0,
@@ -149,7 +148,7 @@ function WebTheming() {
               <h1 className="h2">Web Theming</h1>
             </div>
             <h2 className="mb-5">Theming Console</h2>
-            <div className="row">
+            <div className="row ">
               <div className="col">
                 <AppBar position="static" color="default">
                   <Tabs value={value} onChange={handleChange} variant="scrollable" scrollButtons="on" indicatorColor="primary" textColor="primary" aria-label="scrollable force tabs example">
@@ -161,29 +160,41 @@ function WebTheming() {
                     <Tab label="Disable Button" icon={<NotInterestedIcon />} {...a11yProps(5)} />
                   </Tabs>
                 </AppBar>
-                <TabPanel value={value} index={0} style={{ display: "flex", justifyContent: "center" }}>
-                  <Form style={{ marginLeft: "15rem", marginBottom: "2rem" }}>
-                    <Form.Group className="mb-3" controlId="liveness">
-                      <Form.Label>Background Hexa Color Value</Form.Label>
-                      <Form.Control type="string" placeholder="#FFFFF" style={{ width: "7rem" }} onChange={(e) => setbackgroundValue(e.target.value)} />
-                    </Form.Group>
-                    <Button variant="primary" type="button" onClick={handleBackground}>
-                      Confirm
-                    </Button>
-                  </Form>
-                  <ColorPicker />
+                <TabPanel value={value} index={0} style={{ display: "flex" }}>
+                  <div className="row d-flex ">
+                    <div className="col">
+                      <Form style={{ marginRight: "1rem" }}>
+                        <Form.Group className="mb-3" controlId="liveness">
+                          <Form.Label>Background Hexa Color Value</Form.Label>
+                          <Form.Control type="string" placeholder="#FFFFF" style={{ width: "7rem" }} onChange={(e) => setbackgroundValue(e.target.value)} />
+                        </Form.Group>
+                        <Button variant="primary" type="button" onClick={handleBackground}>
+                          Confirm
+                        </Button>
+                      </Form>
+                    </div>
+                    <div className="col">
+                      <ColorPicker />
+                    </div>
+                  </div>
                 </TabPanel>
-                <TabPanel value={value} index={1} style={{ display: "flex", justifyContent: "center" }}>
-                  <Form style={{ marginLeft: "15rem", marginBottom: "2rem" }}>
-                    <Form.Group className="mb-3" controlId="liveness">
-                      <Form.Label>Box Hexa Color Value</Form.Label>
-                      <Form.Control type="string" placeholder="#FFFFF" style={{ width: "7rem" }} onChange={(e) => setboxValue(e.target.value)} />
-                    </Form.Group>
-                    <Button variant="primary" type="button" onClick={handleBox}>
-                      Confirm
-                    </Button>
-                  </Form>
-                  <ColorPicker />
+                <TabPanel value={value} index={1} style={{ display: "flex" }}>
+                  <div className="row ">
+                    <div className="col">
+                      <Form style={{ marginRight: "4.5rem" }}>
+                        <Form.Group className="mb-3" controlId="liveness">
+                          <Form.Label>Box Hexa Color Value</Form.Label>
+                          <Form.Control type="string" placeholder="#FFFFF" style={{ width: "7rem" }} onChange={(e) => setbackgroundValue(e.target.value)} />
+                        </Form.Group>
+                        <Button variant="primary" type="button" onClick={handleBox}>
+                          Confirm
+                        </Button>
+                      </Form>
+                    </div>
+                    <div className="col">
+                      <ColorPicker />
+                    </div>
+                  </div>
                 </TabPanel>
 
                 <TabPanel value={value} index={2}>
@@ -206,17 +217,23 @@ function WebTheming() {
                   <label htmlFor="Button">Web Title :</label>
                   <input style={{ border: "2px solid #E9001C", boxShadow: "0px 2px 2px FF001E" }} type="text" id="background" name="color" />
                 </TabPanel>
-                <TabPanel value={value} index={4} style={{ display: "flex", justifyContent: "center" }}>
-                  <Form style={{ marginLeft: "15rem", marginBottom: "2rem" }}>
-                    <Form.Group className="mb-3" controlId="liveness">
-                      <Form.Label>Button Hexa Color Value</Form.Label>
-                      <Form.Control type="string" placeholder="#FFFFF" style={{ width: "7rem" }} onChange={(e) => setbuttonValue(e.target.value)} />
-                    </Form.Group>
-                    <Button variant="primary" type="button" onClick={handleButton}>
-                      Confirm
-                    </Button>
-                  </Form>
-                  <ColorPicker />
+                <TabPanel value={value} index={4} style={{ display: "flex" }}>
+                  <div className="row 4">
+                    <div className="col">
+                      <Form style={{ marginRight: "3.5rem" }}>
+                        <Form.Group className="mb-3" controlId="liveness">
+                          <Form.Label>Button Hexa Color Value</Form.Label>
+                          <Form.Control type="string" placeholder="#FFFFF" style={{ width: "7rem" }} onChange={(e) => setbackgroundValue(e.target.value)} />
+                        </Form.Group>
+                        <Button variant="primary" type="button" onClick={handleBox}>
+                          Confirm
+                        </Button>
+                      </Form>
+                    </div>
+                    <div className="col">
+                      <ColorPicker />
+                    </div>
+                  </div>
                 </TabPanel>
                 <TabPanel value={value} index={5}>
                   <Form>
