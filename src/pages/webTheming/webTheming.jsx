@@ -17,7 +17,6 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import reactRouterDom from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -65,22 +64,24 @@ function WebTheming() {
     background: "",
     box: "",
     button: "",
-    percentage: 0,
     title: "",
     attributes: [""],
     operationalEnd: 0,
     operationalStart: 0,
     percentageLiveness: 0,
     percentageSimilarity: 0,
+    operationalButton: false
   });
   const role = localStorage.getItem("ROLE");
   const Token = localStorage.getItem("Token");
 
-  const [liveness, setLiveness] = useState();
-  const [similarity, setSimilarity] = useState();
-  const [backgroundValue, setbackgroundValue] = useState();
-  const [boxValue, setboxValue] = useState();
-  const [buttonValue, setbuttonValue] = useState();
+  const [liveness, setLiveness] = useState(dataParameter[0]?.percentageLiveness);
+  const [similarity, setSimilarity] = useState(dataParameter[0]?.percentageSimilarity);
+  const [backgroundValue, setbackgroundValue] = useState(dataParameter[0]?.background);
+  const [boxValue, setboxValue] = useState(dataParameter[0]?.box);
+  const [buttonValue, setbuttonValue] = useState(dataParameter[0]?.operationalButton);
+  const [buttonColor, setButtonColor] = useState(dataParameter[0]?.button)
+
   const handlePercentage = () => {
     const url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`;
 
@@ -96,8 +97,10 @@ function WebTheming() {
   const handleButton = () => {
     const url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`;
 
+    console.log(buttonValue)
+
     axios
-      .post(url, { button: buttonValue }, { headers: { Authorization: `Bearer ${Token}` } })
+      .post(url, { operationalButton: buttonValue }, { headers: { Authorization: `Bearer ${Token}` } })
       .then((res) => {
         console.log(res.data);
       })
@@ -134,9 +137,9 @@ function WebTheming() {
     getData();
   }, []);
   console.log("data", dataParameter);
-  console.log("background", backgroundValue);
-  console.log("box", boxValue);
-  console.log("button", buttonValue);
+  console.log("percentage", dataParameter[0]?.percentageLiveness);
+  console.log("background", dataParameter[0]?.background);
+  console.log("button", dataParameter[0]?.operationalButton);
 
   return (
     <>
@@ -177,7 +180,7 @@ function WebTheming() {
                   <Form style={{ marginLeft: "15rem", marginBottom: "2rem" }}>
                     <Form.Group className="mb-3" controlId="liveness">
                       <Form.Label>Box Hexa Color Value</Form.Label>
-                      <Form.Control type="string" placeholder="#FFFFF" style={{ width: "7rem" }} onChange={(e) => setboxValue(e.target.value)} />
+                      <Form.Control type="string" placeholder="#FFFFF" style={{ width: "7rem" }} onChange={(e) => setboxValue(e.target.value)} value={boxValue} />
                     </Form.Group>
                     <Button variant="primary" type="button" onClick={handleBox}>
                       Confirm
@@ -190,12 +193,12 @@ function WebTheming() {
                   <Form>
                     <Form.Group className="mb-3" controlId="liveness">
                       <Form.Label>Face Liveness Percentage</Form.Label>
-                      <Form.Control type="number" placeholder="75" style={{ width: "5rem" }} onChange={(e) => setLiveness(e.target.value)} />
+                      <Form.Control type="number" placeholder="75" style={{ width: "5rem" }} onChange={(e) => setLiveness(e.target.value)} value={liveness} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="similarity">
                       <Form.Label>Face Recognition Similarity percentage</Form.Label>
-                      <Form.Control type="number" placeholder="75" style={{ width: "5rem" }} onChange={(e) => setSimilarity(e.target.value)} />
+                      <Form.Control type="number" placeholder="75" style={{ width: "5rem" }} onChange={(e) => setSimilarity(e.target.value)} value={similarity} />
                     </Form.Group>
                     <Button variant="primary" type="button" onClick={handlePercentage}>
                       Confirm
@@ -220,13 +223,16 @@ function WebTheming() {
                 </TabPanel>
                 <TabPanel value={value} index={5}>
                   <Form>
-                    <Form.Check type="switch" id="create-call-switch" label="Disable Agent Create Call Button" />
-                    <Form.Check
-                      type="switch"
-                      label="Disable Mobile End Call Button"
-                      id="end-call-switch"
-                      // checked={}
+                    <Form.Check 
+                    type="switch" 
+                    id="create-call-switch" 
+                    label="Disable Agent Create Call Button" 
+                    onChange={() => setbuttonValue((prevCheck) => !prevCheck)}
+                    value={buttonValue}
                     />
+                    <Button type='button' onClick={handleButton}>
+                      Confirm
+                    </Button>
                   </Form>
                 </TabPanel>
                 <TabPanel value={value} index={6}>
