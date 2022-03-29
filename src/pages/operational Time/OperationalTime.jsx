@@ -13,33 +13,23 @@ function OperationalTime() {
     const role = localStorage.getItem("ROLE");
     const token = localStorage.getItem("Token");
     const Url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`;
-    const hasil = value[0].replace(":", ".");
-    const hasil2 = value[1].replace(":", ".");
-    console.log("URL >>>>>>>", Url);
+
+    const startHour = parseFloat(value[0][0] + value[0][1]);
+    const startMin = parseFloat((value[0][3] + value[0][4]) / 60);
+    const endHour = parseFloat(value[1][0] + value[1][1]);
+    const endMin = parseFloat((value[1][3] + value[1][4]) / 60);
+
+    const start = startHour + startMin;
+    const end = endHour + endMin;
+
+    console.log(start, end);
 
     axios
-      .post(
-        Url,
-        {
-          operationalStart: hasil,
-          operationalEnd: hasil2,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response.data);
-      });
-
-    // axios
-    //   .post(Url, { body: { operationalStart: hasil, operationalEnd: hasil2 } }, { headers: { Authorization: `Bearer ${token}` } })
-    //   .then((res) => {
-    //     console.log("api>>>>>>>>", res.data);
-    //   })
-    //   .catch((err) => console.log(err));
+      .post(Url, { operationalEnd: end, operationalStart: start }, { headers: { Authorization: `Bearer ${token}` } })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (

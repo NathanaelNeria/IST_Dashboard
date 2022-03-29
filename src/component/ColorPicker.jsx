@@ -61,6 +61,7 @@ class ColorPicker extends React.Component {
         },
       },
     });
+    console.log("warna", this.state.color);
     return (
       <div>
         <div style={styles.swatch} onClick={this.onClick}>

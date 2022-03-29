@@ -12,7 +12,7 @@ import AspectRatioRoundedIcon from "@material-ui/icons/AspectRatioRounded";
 import FingerprintRoundedIcon from "@material-ui/icons/FingerprintRounded";
 import SortByAlphaRoundedIcon from "@material-ui/icons/SortByAlphaRounded";
 import CropFreeRoundedIcon from "@material-ui/icons/CropFreeRounded";
-import NotInterestedIcon from '@material-ui/icons/NotInterested';
+import NotInterestedIcon from "@material-ui/icons/NotInterested";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import axios from "axios";
@@ -76,11 +76,53 @@ function WebTheming() {
   const role = localStorage.getItem("ROLE");
   const Token = localStorage.getItem("Token");
 
-  const switchValue = [0,1]
+  const [liveness, setLiveness] = useState();
+  const [similarity, setSimilarity] = useState();
+  const [backgroundValue, setbackgroundValue] = useState();
+  const [boxValue, setboxValue] = useState();
+  const [buttonValue, setbuttonValue] = useState();
+  const handlePercentage = () => {
+    const url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`;
 
-  const handleSwitch = () => {
-    console.log(switchValue);
-  }
+    console.log(liveness, similarity);
+
+    axios
+      .post(url, { percentageLiveness: liveness, percentageSimilarity: similarity }, { headers: { Authorization: `Bearer ${Token}` } })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+  const handleButton = () => {
+    const url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`;
+
+    axios
+      .post(url, { button: buttonValue }, { headers: { Authorization: `Bearer ${Token}` } })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+  const handleBox = () => {
+    const url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`;
+
+    axios
+      .post(url, { box: boxValue }, { headers: { Authorization: `Bearer ${Token}` } })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+  const handleBackground = () => {
+    const url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`;
+
+    axios
+      .post(url, { background: backgroundValue }, { headers: { Authorization: `Bearer ${Token}` } })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const getData = async () => {
     await axios
@@ -92,6 +134,10 @@ function WebTheming() {
     getData();
   }, []);
   console.log("data", dataParameter);
+  console.log("background", backgroundValue);
+  console.log("box", boxValue);
+  console.log("button", buttonValue);
+
   return (
     <>
       <Header />
@@ -112,52 +158,76 @@ function WebTheming() {
                     <Tab label="Percentage" icon={<FingerprintRoundedIcon />} {...a11yProps(2)} />
                     <Tab label="title" icon={<SortByAlphaRoundedIcon />} {...a11yProps(3)} />
                     <Tab label="button" icon={<CropFreeRoundedIcon />} {...a11yProps(4)} />
-                    <Tab label="Disable Button" icon={<NotInterestedIcon/>} {...a11yProps(5)} />
+                    <Tab label="Disable Button" icon={<NotInterestedIcon />} {...a11yProps(5)} />
                   </Tabs>
                 </AppBar>
                 <TabPanel value={value} index={0} style={{ display: "flex", justifyContent: "center" }}>
+                  <Form style={{ marginLeft: "15rem", marginBottom: "2rem" }}>
+                    <Form.Group className="mb-3" controlId="liveness">
+                      <Form.Label>Background Hexa Color Value</Form.Label>
+                      <Form.Control type="string" placeholder="#FFFFF" style={{ width: "7rem" }} onChange={(e) => setbackgroundValue(e.target.value)} />
+                    </Form.Group>
+                    <Button variant="primary" type="button" onClick={handleBackground}>
+                      Confirm
+                    </Button>
+                  </Form>
                   <ColorPicker />
                 </TabPanel>
                 <TabPanel value={value} index={1} style={{ display: "flex", justifyContent: "center" }}>
+                  <Form style={{ marginLeft: "15rem", marginBottom: "2rem" }}>
+                    <Form.Group className="mb-3" controlId="liveness">
+                      <Form.Label>Box Hexa Color Value</Form.Label>
+                      <Form.Control type="string" placeholder="#FFFFF" style={{ width: "7rem" }} onChange={(e) => setboxValue(e.target.value)} />
+                    </Form.Group>
+                    <Button variant="primary" type="button" onClick={handleBox}>
+                      Confirm
+                    </Button>
+                  </Form>
                   <ColorPicker />
                 </TabPanel>
-                <TabPanel value={value} index={2}>
-                <Form>
-                  <Form.Group className="mb-3" controlId="liveness">
-                    <Form.Label>Face Liveness Percentage</Form.Label>
-                    <Form.Control type="number" placeholder="75" style={{width: '5rem'}}/>                
-                  </Form.Group>
 
-                  <Form.Group className="mb-3" controlId="similarity">
-                    <Form.Label>Face Recognition Similarity percentage</Form.Label>
-                    <Form.Control type="number" placeholder="75" style={{width: '5rem'}}/>
-                  </Form.Group>
-                  <Button variant="primary" type="button">
-                    Confirm
-                  </Button>
-                </Form>
+                <TabPanel value={value} index={2}>
+                  <Form>
+                    <Form.Group className="mb-3" controlId="liveness">
+                      <Form.Label>Face Liveness Percentage</Form.Label>
+                      <Form.Control type="number" placeholder="75" style={{ width: "5rem" }} onChange={(e) => setLiveness(e.target.value)} />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="similarity">
+                      <Form.Label>Face Recognition Similarity percentage</Form.Label>
+                      <Form.Control type="number" placeholder="75" style={{ width: "5rem" }} onChange={(e) => setSimilarity(e.target.value)} />
+                    </Form.Group>
+                    <Button variant="primary" type="button" onClick={handlePercentage}>
+                      Confirm
+                    </Button>
+                  </Form>
                 </TabPanel>
                 <TabPanel value={value} index={3} style={{ display: "flex", justifyContent: "center" }}>
                   <label htmlFor="Button">Web Title :</label>
                   <input style={{ border: "2px solid #E9001C", boxShadow: "0px 2px 2px FF001E" }} type="text" id="background" name="color" />
                 </TabPanel>
                 <TabPanel value={value} index={4} style={{ display: "flex", justifyContent: "center" }}>
+                  <Form style={{ marginLeft: "15rem", marginBottom: "2rem" }}>
+                    <Form.Group className="mb-3" controlId="liveness">
+                      <Form.Label>Button Hexa Color Value</Form.Label>
+                      <Form.Control type="string" placeholder="#FFFFF" style={{ width: "7rem" }} onChange={(e) => setbuttonValue(e.target.value)} />
+                    </Form.Group>
+                    <Button variant="primary" type="button" onClick={handleButton}>
+                      Confirm
+                    </Button>
+                  </Form>
                   <ColorPicker />
                 </TabPanel>
                 <TabPanel value={value} index={5}>
-                <Form>
-                  <Form.Check 
-                    type="switch"
-                    id="create-call-switch"
-                    label="Disable Agent Create Call Button"
-                  />
-                  <Form.Check 
-                    type="switch"
-                    label="Disable Mobile End Call Button"
-                    id="end-call-switch"
-                    // checked={}
-                  />
-                </Form>
+                  <Form>
+                    <Form.Check type="switch" id="create-call-switch" label="Disable Agent Create Call Button" />
+                    <Form.Check
+                      type="switch"
+                      label="Disable Mobile End Call Button"
+                      id="end-call-switch"
+                      // checked={}
+                    />
+                  </Form>
                 </TabPanel>
                 <TabPanel value={value} index={6}>
                   Item Seven
@@ -170,5 +240,4 @@ function WebTheming() {
     </>
   );
 }
-
 export default WebTheming;

@@ -45,6 +45,8 @@ function PageLog() {
                         <p> button: {item[1]?.button}</p>
                         <p>title: {item[1]?.title}</p>
                         <p>percentage: {item[1]?.percentage}</p>
+                        <p>operationalStart: {item[1]?.operationalStart}</p>
+                        <p>operationalEnd: {item[1]?.operationalEnd}</p>
                         <p>percentageLiveness: {item[1]?.percentageLiveness}</p>
                         <p>percentageSimilarity: {item[1]?.percentageSimilarity}</p>
                       </Card.Title>
