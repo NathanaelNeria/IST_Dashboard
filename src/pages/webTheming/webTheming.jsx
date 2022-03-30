@@ -17,7 +17,6 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import reactRouterDom from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -71,6 +70,7 @@ function WebTheming() {
     operationalStart: 0,
     percentageLiveness: 0,
     percentageSimilarity: 0,
+    operationalButton: false,
   });
   const role = localStorage.getItem("ROLE");
   const Token = localStorage.getItem("Token");
@@ -79,7 +79,9 @@ function WebTheming() {
   const [similarity, setSimilarity] = useState();
   const [backgroundValue, setbackgroundValue] = useState();
   const [boxValue, setboxValue] = useState();
+  const [operationalButton, setoperationalButton] = useState(false);
   const [buttonValue, setbuttonValue] = useState();
+
   const handlePercentage = () => {
     const url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`;
 
@@ -96,7 +98,17 @@ function WebTheming() {
     const url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`;
 
     axios
-      .post(url, { button: buttonValue }, { headers: { Authorization: `Bearer ${Token}` } })
+      .post(url, { operationalButton: buttonValue }, { headers: { Authorization: `Bearer ${Token}` } })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+  const handleOperationalButton = () => {
+    const url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`;
+
+    axios
+      .post(url, { operationalButton: operationalButton }, { headers: { Authorization: `Bearer ${Token}` } })
       .then((res) => {
         console.log(res.data);
       })
@@ -132,10 +144,7 @@ function WebTheming() {
   useEffect(() => {
     getData();
   }, []);
-  console.log("data", dataParameter);
-  console.log("background", backgroundValue);
-  console.log("box", boxValue);
-  console.log("button", buttonValue);
+  console.log("operationalbutton", operationalButton);
 
   return (
     <>
@@ -184,7 +193,7 @@ function WebTheming() {
                       <Form style={{ marginRight: "4.5rem" }}>
                         <Form.Group className="mb-3" controlId="liveness">
                           <Form.Label>Box Hexa Color Value</Form.Label>
-                          <Form.Control type="string" placeholder="#FFFFF" style={{ width: "7rem" }} onChange={(e) => setbackgroundValue(e.target.value)} />
+                          <Form.Control type="string" placeholder="#FFFFF" style={{ width: "7rem" }} onChange={(e) => setboxValue(e.target.value)} />
                         </Form.Group>
                         <Button variant="primary" type="button" onClick={handleBox}>
                           Confirm
@@ -201,12 +210,12 @@ function WebTheming() {
                   <Form>
                     <Form.Group className="mb-3" controlId="liveness">
                       <Form.Label>Face Liveness Percentage</Form.Label>
-                      <Form.Control type="number" placeholder="75" style={{ width: "5rem" }} onChange={(e) => setLiveness(e.target.value)} />
+                      <Form.Control type="number" placeholder="75" style={{ width: "5rem" }} onChange={(e) => setLiveness(e.target.value)} value={liveness} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="similarity">
                       <Form.Label>Face Recognition Similarity percentage</Form.Label>
-                      <Form.Control type="number" placeholder="75" style={{ width: "5rem" }} onChange={(e) => setSimilarity(e.target.value)} />
+                      <Form.Control type="number" placeholder="75" style={{ width: "5rem" }} onChange={(e) => setSimilarity(e.target.value)} value={similarity} />
                     </Form.Group>
                     <Button variant="primary" type="button" onClick={handlePercentage}>
                       Confirm
@@ -223,9 +232,9 @@ function WebTheming() {
                       <Form style={{ marginRight: "3.5rem" }}>
                         <Form.Group className="mb-3" controlId="liveness">
                           <Form.Label>Button Hexa Color Value</Form.Label>
-                          <Form.Control type="string" placeholder="#FFFFF" style={{ width: "7rem" }} onChange={(e) => setbackgroundValue(e.target.value)} />
+                          <Form.Control type="string" placeholder="#FFFFF" style={{ width: "7rem" }} onChange={(e) => setbuttonValue(e.target.value)} />
                         </Form.Group>
-                        <Button variant="primary" type="button" onClick={handleBox}>
+                        <Button variant="primary" type="button" onClick={handleButton}>
                           Confirm
                         </Button>
                       </Form>
@@ -237,13 +246,10 @@ function WebTheming() {
                 </TabPanel>
                 <TabPanel value={value} index={5}>
                   <Form>
-                    <Form.Check type="switch" id="create-call-switch" label="Disable Agent Create Call Button" />
-                    <Form.Check
-                      type="switch"
-                      label="Disable Mobile End Call Button"
-                      id="end-call-switch"
-                      // checked={}
-                    />
+                    <Form.Check type="switch" id="create-call-switch" label="Disable Agent Create Call Button" onClick={() => setoperationalButton((prevCheck) => !prevCheck)} value={operationalButton} />
+                    <Button type="button" onClick={handleOperationalButton}>
+                      Confirm
+                    </Button>
                   </Form>
                 </TabPanel>
                 <TabPanel value={value} index={6}>

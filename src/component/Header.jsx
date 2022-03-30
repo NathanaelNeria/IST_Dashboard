@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import icon from "../assets/ISTicon.png";
 
 function Header() {
-  const { role } = useParams();
 
   const setLocalStorage = () => {
     localStorage.setItem("Token", null);
@@ -16,7 +15,7 @@ function Header() {
   return (
     <>
       <div className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 mb-2 shadow">
-        <Link to={"/dashboard/" + role}>
+        <Link to={`/dashboard`}>
           <img src={icon} alt="" width="50px" height="50px" />
           <a className="navbar-brand col-md-3 col-lg-2 me-0 px-3">IST Dashboard</a>
         </Link>

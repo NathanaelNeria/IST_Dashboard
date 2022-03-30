@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import Header from "../../component/Header";
 import NavBar from "../../component/nav";
 import { Row, Col, Card, Button } from "react-bootstrap";
@@ -7,11 +7,35 @@ import "@wojtekmaj/react-timerange-picker/dist/TimeRangePicker.css";
 import axios from "axios";
 
 function OperationalTime() {
-  const [value, setValue] = useState(["08:00", "17:00"]);
+  const role = localStorage.getItem("ROLE");
+  const token = localStorage.getItem("Token");
+
+  const [dataParameter, setdataParameter] = useState({
+    background: "",
+    box: "",
+    button: "",
+    title: "",
+    attributes: [""],
+    operationalEnd: 0,
+    operationalStart: 0,
+    percentageLiveness: 0,
+    percentageSimilarity: 0,
+    operationalButton: false
+  });
+  
+  const [value, setValue] = useState();
+
+  const handleGetBE = async () => {
+    const Url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`
+
+    await axios.get(Url, { headers: { Authorization: `Bearer ${token}` } })
+    .then((res) => {
+      setdataParameter(res.data.data)
+    })
+    .catch((e)=>console.log(e))
+  }
 
   const handleAPI = () => {
-    const role = localStorage.getItem("ROLE");
-    const token = localStorage.getItem("Token");
     const Url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`;
 
     const startHour = parseFloat(value[0][0] + value[0][1]);
@@ -31,6 +55,23 @@ function OperationalTime() {
       })
       .catch((err) => console.log(err));
   };
+
+  useEffect(() => {
+    handleGetBE()
+  }, [])
+
+  console.log('operational start', dataParameter[0]?.operationalStart)
+  console.log('operational end', dataParameter[0]?.operationalEnd)
+
+  const handleConvert = () => {
+    let startTime
+    let endTime
+
+    startTime = dataParameter[0]?.operationalStart
+    endTime = dataParameter[0]?.operationalEnd
+
+    
+  }
 
   return (
     <>
