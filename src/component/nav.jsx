@@ -14,9 +14,9 @@ function NavBar() {
 
   return (
     <>
-      <nav id="sidebarMenu" className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-        <div className="position-sticky pt-3">
-          <ul className="nav flex-column d-flex align-content-center align-item-center">
+      <nav id="sidebarMenu " className="h-100">
+        <div className="position-sticky shadow h-100">
+          <ul className="nav flex-column ps-3 ">
             <li className="nav-item ">
               <Link to={"/dashboard"} style={{ textDecoration: "none" }}>
                 <FcIcons.FcHome style={{ height: "80px", width: "80px" }} />

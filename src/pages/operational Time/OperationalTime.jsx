@@ -20,20 +20,21 @@ function OperationalTime() {
     operationalStart: 0,
     percentageLiveness: 0,
     percentageSimilarity: 0,
-    operationalButton: false
+    operationalButton: false,
   });
-  
+
   const [value, setValue] = useState();
 
   const handleGetBE = async () => {
-    const Url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`
+    const Url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`;
 
-    await axios.get(Url, { headers: { Authorization: `Bearer ${token}` } })
-    .then((res) => {
-      setdataParameter(res.data.data)
-    })
-    .catch((e)=>console.log(e))
-  }
+    await axios
+      .get(Url, { headers: { Authorization: `Bearer ${token}` } })
+      .then((res) => {
+        setdataParameter(res.data.data);
+      })
+      .catch((e) => console.log(e));
+  };
 
   const handleAPI = () => {
     const Url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`;
@@ -57,58 +58,59 @@ function OperationalTime() {
   };
 
   useEffect(() => {
-    handleGetBE()
-  }, [])
+    handleGetBE();
+  }, []);
 
-  console.log('operational start', dataParameter[0]?.operationalStart)
-  console.log('operational end', dataParameter[0]?.operationalEnd)
+  console.log("operational start", dataParameter[0]?.operationalStart);
+  console.log("operational end", dataParameter[0]?.operationalEnd);
 
   const handleConvert = () => {
-    let startTime
-    let endTime
+    let startTime;
+    let endTime;
 
-    startTime = dataParameter[0]?.operationalStart
-    endTime = dataParameter[0]?.operationalEnd
+    startTime = dataParameter[0]?.operationalStart;
+    endTime = dataParameter[0]?.operationalEnd;
 
-    const stringStart = startTime.toString()
-    const stringEnd = endTime.toString()
+    const stringStart = startTime.toString();
+    const stringEnd = endTime.toString();
 
-    const startTimeLength = stringStart.length
-    const endTimeLength = stringEnd.length
+    const startTimeLength = stringStart.length;
+    const endTimeLength = stringEnd.length;
 
-    if(startTimeLength === 1 && endTimeLength === 2){
-      const startHour = stringStart[0]
-      const startMin = ':00'
-      const sTime = startHour + startMin
+    if (startTimeLength === 1 && endTimeLength === 2) {
+      const startHour = stringStart[0];
+      const startMin = ":00";
+      const sTime = startHour + startMin;
 
-      const endHour = stringEnd[0] + stringEnd[1]
-      const endMin = ':00'
-      const eTime = endHour + endMin
-
-      // setValue(sTime, eTime)
-      console.log(sTime, eTime)
-    }
-    else if(startTimeLength === 3 && endTimeLength === 4){
-      const startHour = stringStart[0]
-      const floatEnd = parseFloat(stringStart[2] + stringStart[3] * 60)
-      const sTime = startHour + ':'
-
-      const endHour = stringEnd[0] + stringEnd[1]
-      const endMin = stringEnd[3]
-      const eTime = endHour + ':' + endMin
+      const endHour = stringEnd[0] + stringEnd[1];
+      const endMin = ":00";
+      const eTime = endHour + endMin;
 
       // setValue(sTime, eTime)
-      console.log(sTime, eTime)
+      console.log(sTime, eTime);
+    } else if (startTimeLength === 3 && endTimeLength === 4) {
+      const startHour = stringStart[0];
+      const floatEnd = parseFloat(stringStart[2] + stringStart[3] * 60);
+      const sTime = startHour + ":";
+
+      const endHour = stringEnd[0] + stringEnd[1];
+      const endMin = stringEnd[3];
+      const eTime = endHour + ":" + endMin;
+
+      // setValue(sTime, eTime)
+      console.log(sTime, eTime);
     }
-  }
+  };
 
   return (
     <>
       <Header />
       <div className="container-fluid">
         <div className="row " style={{ height: "100vh" }}>
-          <NavBar />
-          <div className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div className="col-1 m-0 p-0">
+            <NavBar />
+          </div>
+          <div className="col-11">
             <div className="chartjs-size-monitor">
               <div className="chartjs-size-monitor-expand">
                 <div className=""></div>

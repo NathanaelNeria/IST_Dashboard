@@ -43,8 +43,11 @@ function Dashboard() {
       <Header />
       <div className="container-fluid">
         <div className="row " style={{ height: "100vh" }}>
-          <NavBar />
-          <div className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div className="col-1 m-0 p-0">
+            <NavBar />
+          </div>
+
+          <div className="col-11">
             <div className="chartjs-size-monitor">
               <div className="chartjs-size-monitor-expand">
                 <div className=""></div>

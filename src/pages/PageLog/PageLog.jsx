@@ -26,15 +26,17 @@ function PageLog() {
       <Header />
       <div className="container-fluid">
         <div className="row " style={{ height: "100vh" }}>
-          <NavBar />
-          <div className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div className="col-1 m-0 p-0">
+            <NavBar />
+          </div>
+          <div className="col-11">
             <div className="d-flex justify-content-between flex-column flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
               <h1 className="h2">Logs Data</h1>
             </div>
             <h2>Log Admin</h2>
-            <div className="row">
-              <div className="col ">
-                {dataLog?.data?.map((item) => (
+            <div className="row d-flex w-50 ">
+              {dataLog?.data?.map((item) => (
+                <div className="col ">
                   <Card border="primary" className="mb-5">
                     <Card.Header>Updated by:{item[0]?.editedBy} </Card.Header>
                     <Card.Body>
@@ -52,8 +54,8 @@ function PageLog() {
                       </Card.Title>
                     </Card.Body>
                   </Card>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
