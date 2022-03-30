@@ -86,64 +86,101 @@ function WebTheming() {
 
   const handlePercentage = () => {
     const url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`;
-
+    const Swal = require("sweetalert2");
     console.log(liveness, similarity);
 
     axios
       .post(url, { percentageLiveness: liveness, percentageSimilarity: similarity }, { headers: { Authorization: `Bearer ${Token}` } })
       .then((res) => {
+        Swal.fire({
+          icon: "success",
+          title: "Done",
+          text: "data update",
+          footer: "Great!!",
+        });
         console.log(res.data);
       })
       .catch((err) => console.log(err));
   };
   const handleOpButton = () => {
     const url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`;
-
+    const Swal = require("sweetalert2");
     console.log("operational button", opButtonValue);
 
     axios
       .post(url, { operationalButton: opButtonValue }, { headers: { Authorization: `Bearer ${Token}` } })
       .then((res) => {
+        Swal.fire({
+          icon: "success",
+          title: "Done",
+          text: "data update",
+          footer: "Great!!",
+        });
         console.log(res.data);
       })
       .catch((err) => console.log(err));
   };
   const handleButtonColor = () => {
     const url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`;
-
+    const Swal = require("sweetalert2");
     axios
       .post(url, { button: buttonValue }, { headers: { Authorization: `Bearer ${Token}` } })
       .then((res) => {
+        Swal.fire({
+          icon: "success",
+          title: "Done",
+          text: "data update",
+          footer: "Great!!",
+        });
         console.log(res.data);
       })
       .catch((err) => console.log(err));
   };
   const handleBox = () => {
     const url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`;
-
+    const Swal = require("sweetalert2");
     axios
       .post(url, { box: boxValue }, { headers: { Authorization: `Bearer ${Token}` } })
       .then((res) => {
+        Swal.fire({
+          icon: "success",
+          title: "Done",
+          text: "data update",
+          footer: "Great!!",
+        });
         console.log(res.data);
       })
       .catch((err) => console.log(err));
   };
   const handleBackground = () => {
     const url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`;
-
+    const Swal = require("sweetalert2");
     axios
       .post(url, { background: backgroundValue }, { headers: { Authorization: `Bearer ${Token}` } })
       .then((res) => {
+        Swal.fire({
+          icon: "success",
+          title: "Done",
+          text: "data update",
+          footer: "Great!!",
+        });
         console.log(res.data);
       })
       .catch((err) => console.log(err));
   };
   const handleTitle = () => {
     const url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`;
-
+    const Swal = require("sweetalert2");
     axios
       .post(url, { title: title }, { headers: { Authorization: `Bearer ${Token}` } })
       .then((res) => {
+        Swal.fire({
+          icon: "success",
+          title: "Done",
+          text: "data update",
+          footer: "Great!!",
+        });
+
         console.log(res.data);
       })
       .catch((err) => console.log(err));
@@ -228,7 +265,7 @@ function WebTheming() {
                   </div>
                 </TabPanel>
 
-                <TabPanel value={value} index={2}>
+                <TabPanel value={value} index={2} style={{ display: "flex", justifyContent: "center" }}>
                   <div className="row">
                     <div className="col">
                       <ColorPicker />
