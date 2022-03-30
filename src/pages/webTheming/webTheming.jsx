@@ -45,19 +45,12 @@ function a11yProps(index) {
   };
 }
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    width: "100%",
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
-
 function WebTheming() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    getData();
   };
 
   const [dataParameter, setdataParameter] = useState({
@@ -79,8 +72,17 @@ function WebTheming() {
   const [similarity, setSimilarity] = useState();
   const [backgroundValue, setbackgroundValue] = useState();
   const [boxValue, setboxValue] = useState();
-  const [operationalButton, setoperationalButton] = useState(false);
-  const [buttonValue, setbuttonValue] = useState();
+  const [buttonValue, setButtonValue] = useState();
+  const [opButtonValue, setopButtonValue] = useState();
+  const [title, setTitle] = useState();
+
+  const getOpButton = dataParameter?.operationalButton;
+  const getLiveness = dataParameter?.percentageLiveness;
+  const getSimilarity = dataParameter?.percentageSimilarity;
+  const getBackgroundValue = dataParameter?.background;
+  const getBoxValue = dataParameter?.box;
+  const getButtonValue = dataParameter?.button;
+  const getTitle = dataParameter?.title;
 
   const handlePercentage = () => {
     const url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`;
@@ -94,21 +96,23 @@ function WebTheming() {
       })
       .catch((err) => console.log(err));
   };
-  const handleButton = () => {
+  const handleOpButton = () => {
     const url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`;
 
+    console.log("operational button", opButtonValue);
+
     axios
-      .post(url, { operationalButton: buttonValue }, { headers: { Authorization: `Bearer ${Token}` } })
+      .post(url, { operationalButton: opButtonValue }, { headers: { Authorization: `Bearer ${Token}` } })
       .then((res) => {
         console.log(res.data);
       })
       .catch((err) => console.log(err));
   };
-  const handleOperationalButton = () => {
+  const handleButtonColor = () => {
     const url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`;
 
     axios
-      .post(url, { operationalButton: operationalButton }, { headers: { Authorization: `Bearer ${Token}` } })
+      .post(url, { button: buttonValue }, { headers: { Authorization: `Bearer ${Token}` } })
       .then((res) => {
         console.log(res.data);
       })
@@ -134,17 +138,35 @@ function WebTheming() {
       })
       .catch((err) => console.log(err));
   };
+  const handleTitle = () => {
+    const url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`;
+
+    axios
+      .post(url, { title: title }, { headers: { Authorization: `Bearer ${Token}` } })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const getData = async () => {
     await axios
       .get(`https://api-portal.herokuapp.com/api/v1/${role}/parameter`, { headers: { Authorization: `Bearer ${Token}` } })
-      .then((result) => setdataParameter(result.data.data))
+      .then((result) => {
+        setdataParameter(result.data.data[0]);
+        // console.log(result.data.data[0])
+      })
       .catch((err) => console.log(err));
   };
   useEffect(() => {
-    getData();
+    setInterval(() => {
+      getData();
+    }, 3000);
   }, []);
-  console.log("operationalbutton", operationalButton);
+  console.log("data", dataParameter);
+  // console.log("percentage", dataParameter[0]?.percentageLiveness);
+  // console.log("background", dataParameter[0]?.background);
+  console.log("button", getOpButton);
 
   return (
     <>
@@ -163,91 +185,104 @@ function WebTheming() {
                   <Tabs value={value} onChange={handleChange} variant="scrollable" scrollButtons="on" indicatorColor="primary" textColor="primary" aria-label="scrollable force tabs example">
                     <Tab label="Background" icon={<AspectRatioRoundedIcon />} {...a11yProps(0)} />
                     <Tab label="Box" icon={<DashboardRoundedIcon />} {...a11yProps(1)} />
-                    <Tab label="Percentage" icon={<FingerprintRoundedIcon />} {...a11yProps(2)} />
-                    <Tab label="title" icon={<SortByAlphaRoundedIcon />} {...a11yProps(3)} />
-                    <Tab label="button" icon={<CropFreeRoundedIcon />} {...a11yProps(4)} />
+                    <Tab label="button Color" icon={<CropFreeRoundedIcon />} {...a11yProps(2)} />
+                    <Tab label="Percentage" icon={<FingerprintRoundedIcon />} {...a11yProps(3)} />
+                    <Tab label="title" icon={<SortByAlphaRoundedIcon />} {...a11yProps(4)} />
                     <Tab label="Disable Button" icon={<NotInterestedIcon />} {...a11yProps(5)} />
                   </Tabs>
                 </AppBar>
-                <TabPanel value={value} index={0} style={{ display: "flex" }}>
-                  <div className="row d-flex ">
+                <TabPanel value={value} index={0} style={{ display: "flex", justifyContent: "center" }}>
+                  <div className="row">
                     <div className="col">
-                      <Form style={{ marginRight: "1rem" }}>
+                      <ColorPicker />
+                    </div>
+                    <div className="col">
+                      <Form style={{ marginLeft: "15rem", marginBottom: "2rem" }}>
                         <Form.Group className="mb-3" controlId="liveness">
                           <Form.Label>Background Hexa Color Value</Form.Label>
-                          <Form.Control type="string" placeholder="#FFFFF" style={{ width: "7rem" }} onChange={(e) => setbackgroundValue(e.target.value)} />
+                          <Form.Control type="string" placeholder={`Current: ${getBackgroundValue}`} style={{ width: "15rem" }} onChange={(e) => setbackgroundValue(e.target.value)} />
                         </Form.Group>
                         <Button variant="primary" type="button" onClick={handleBackground}>
                           Confirm
                         </Button>
                       </Form>
                     </div>
+                  </div>
+                </TabPanel>
+                <TabPanel value={value} index={1} style={{ display: "flex", justifyContent: "center" }}>
+                  <div className="row">
                     <div className="col">
                       <ColorPicker />
                     </div>
-                  </div>
-                </TabPanel>
-                <TabPanel value={value} index={1} style={{ display: "flex" }}>
-                  <div className="row ">
                     <div className="col">
-                      <Form style={{ marginRight: "4.5rem" }}>
+                      <Form style={{ marginLeft: "15rem", marginBottom: "2rem" }}>
                         <Form.Group className="mb-3" controlId="liveness">
                           <Form.Label>Box Hexa Color Value</Form.Label>
-                          <Form.Control type="string" placeholder="#FFFFF" style={{ width: "7rem" }} onChange={(e) => setboxValue(e.target.value)} />
+                          <Form.Control type="string" placeholder={`Current: ${getBoxValue}`} style={{ width: "15rem" }} onChange={(e) => setboxValue(e.target.value)} value={boxValue} />
                         </Form.Group>
                         <Button variant="primary" type="button" onClick={handleBox}>
                           Confirm
                         </Button>
                       </Form>
                     </div>
-                    <div className="col">
-                      <ColorPicker />
-                    </div>
                   </div>
                 </TabPanel>
 
                 <TabPanel value={value} index={2}>
+                  <div className="row">
+                    <div className="col">
+                      <ColorPicker />
+                    </div>
+                    <div className="col">
+                      <Form style={{ marginLeft: "15rem", marginBottom: "1rem" }}>
+                        <Form.Group className="mb-2" controlId="liveness">
+                          <Form.Label>Button Hexa Color Value</Form.Label>
+                          <Form.Control type="string" placeholder={`Current: ${getButtonValue}`} style={{ width: "15rem" }} onChange={(e) => setButtonValue(e.target.value)} />
+                        </Form.Group>
+                        <Button variant="primary" type="button" onClick={handleButtonColor}>
+                          Confirm
+                        </Button>
+                      </Form>
+                    </div>
+                  </div>
+                </TabPanel>
+                <TabPanel value={value} index={3} style={{ display: "flex", justifyContent: "flex-start" }}>
                   <Form>
                     <Form.Group className="mb-3" controlId="liveness">
                       <Form.Label>Face Liveness Percentage</Form.Label>
-                      <Form.Control type="number" placeholder="75" style={{ width: "5rem" }} onChange={(e) => setLiveness(e.target.value)} value={liveness} />
+                      <Form.Control type="number" placeholder={`Current: ${getLiveness}`} style={{ width: "8rem" }} onChange={(e) => setLiveness(e.target.value)} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="similarity">
                       <Form.Label>Face Recognition Similarity percentage</Form.Label>
-                      <Form.Control type="number" placeholder="75" style={{ width: "5rem" }} onChange={(e) => setSimilarity(e.target.value)} value={similarity} />
+                      <Form.Control type="number" placeholder={`Current: ${getSimilarity}`} style={{ width: "8rem" }} onChange={(e) => setSimilarity(e.target.value)} />
                     </Form.Group>
                     <Button variant="primary" type="button" onClick={handlePercentage}>
                       Confirm
                     </Button>
                   </Form>
                 </TabPanel>
-                <TabPanel value={value} index={3} style={{ display: "flex", justifyContent: "center" }}>
-                  <label htmlFor="Button">Web Title :</label>
-                  <input style={{ border: "2px solid #E9001C", boxShadow: "0px 2px 2px FF001E" }} type="text" id="background" name="color" />
-                </TabPanel>
-                <TabPanel value={value} index={4} style={{ display: "flex" }}>
-                  <div className="row 4">
-                    <div className="col">
-                      <Form style={{ marginRight: "3.5rem" }}>
-                        <Form.Group className="mb-3" controlId="liveness">
-                          <Form.Label>Button Hexa Color Value</Form.Label>
-                          <Form.Control type="string" placeholder="#FFFFF" style={{ width: "7rem" }} onChange={(e) => setbuttonValue(e.target.value)} />
-                        </Form.Group>
-                        <Button variant="primary" type="button" onClick={handleButton}>
-                          Confirm
-                        </Button>
-                      </Form>
-                    </div>
-                    <div className="col">
-                      <ColorPicker />
-                    </div>
-                  </div>
+                <TabPanel value={value} index={4} style={{ display: "flex", justifyContent: "center" }}>
+                  <Form>
+                    <Form.Group className="mb-3" controlId="liveness">
+                      <Form.Label>Web Title</Form.Label>
+                      <Form.Control type="text" placeholder={`Current: ${getTitle}`} style={{ width: "18rem" }} onChange={(e) => setTitle(e.target.value)} />
+                    </Form.Group>
+
+                    <Button variant="primary" type="button" onClick={handleTitle}>
+                      Confirm
+                    </Button>
+                  </Form>
                 </TabPanel>
                 <TabPanel value={value} index={5}>
                   <Form>
-                    <Form.Check type="switch" id="create-call-switch" label="Disable Agent Create Call Button" onClick={() => setoperationalButton((prevCheck) => !prevCheck)} value={operationalButton} />
-                    <Button type="button" onClick={handleOperationalButton}>
+                    <label style={{ margin: "1rem" }}>Current value is: {getOpButton?.toString()}</label>
+                    <Form.Select defaultValue={!getOpButton} onChange={(e) => setopButtonValue(e.target.value)} style={{ width: "10rem", margin: "1rem" }}>
+                      {/* <option>{opButtonValue}</option> */}
+                      <option value={true}>True</option>
+                      <option value={false}>False</option>
+                    </Form.Select>
+                    <Button type="button" style={{ margin: "1rem" }} onClick={handleOpButton}>
                       Confirm
                     </Button>
                   </Form>
