@@ -34,10 +34,10 @@ function PageLog() {
               <h1 className="h2">Logs Data</h1>
             </div>
             <h2>Log Admin</h2>
-            <div className="row d-flex w-50 ">
+            <div className="row d-flex ">
               {dataLog?.data?.map((item) => (
                 <div className="col ">
-                  <Card border="primary" className="mb-5">
+                  <Card border="info" className="mb-5">
                     <Card.Header>Updated by:{item[0]?.editedBy} </Card.Header>
                     <Card.Body>
                       <Card.Title>
