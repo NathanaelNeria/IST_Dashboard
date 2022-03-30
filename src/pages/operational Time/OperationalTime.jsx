@@ -70,7 +70,36 @@ function OperationalTime() {
     startTime = dataParameter[0]?.operationalStart
     endTime = dataParameter[0]?.operationalEnd
 
-    
+    const stringStart = startTime.toString()
+    const stringEnd = endTime.toString()
+
+    const startTimeLength = stringStart.length
+    const endTimeLength = stringEnd.length
+
+    if(startTimeLength === 1 && endTimeLength === 2){
+      const startHour = stringStart[0]
+      const startMin = ':00'
+      const sTime = startHour + startMin
+
+      const endHour = stringEnd[0] + stringEnd[1]
+      const endMin = ':00'
+      const eTime = endHour + endMin
+
+      // setValue(sTime, eTime)
+      console.log(sTime, eTime)
+    }
+    else if(startTimeLength === 3 && endTimeLength === 4){
+      const startHour = stringStart[0]
+      const floatEnd = parseFloat(stringStart[2] + stringStart[3] * 60)
+      const sTime = startHour + ':'
+
+      const endHour = stringEnd[0] + stringEnd[1]
+      const endMin = stringEnd[3]
+      const eTime = endHour + ':' + endMin
+
+      // setValue(sTime, eTime)
+      console.log(sTime, eTime)
+    }
   }
 
   return (
@@ -103,7 +132,7 @@ function OperationalTime() {
                   <Card.Body>
                     <TimeRangePicker onChange={setValue} value={value} disableClock={true} format="HH:mm" rangeDivider="Until" clearIcon={null} autoFocus={true} />
                     <br />
-                    <Button variant="primary" onClick={handleAPI}>
+                    <Button variant="primary" onClick={handleConvert}>
                       Confirm
                     </Button>
                   </Card.Body>
