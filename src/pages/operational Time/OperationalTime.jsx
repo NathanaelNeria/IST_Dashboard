@@ -23,7 +23,42 @@ function OperationalTime() {
     operationalButton: false,
   });
 
-  const [value, setValue] = useState();
+  const handleConvert = (number) => {
+    // Check sign of given number
+    var sign = (number >= 0) ? 1 : -1;
+
+    // Set positive value of number of sign negative
+    number = number * sign;
+
+    // Separate the int from the decimal part
+    var hour = Math.floor(number);
+    var decpart = number - hour;
+
+    var min = 1 / 60;
+    // Round to nearest minute
+    decpart = min * Math.round(decpart / min);
+
+    var minute = Math.floor(decpart * 60) + '';
+
+    // Add padding if need
+    if (minute.length < 2) {
+    minute = '0' + minute; 
+    }
+
+    // Add Sign in final result
+    sign = sign == 1 ? '' : '-';
+
+    // Concate hours and minutes
+    var time = sign + hour + ':' + minute;
+    
+    return time
+  };
+
+  const [value, setValue] = useState([]);
+  const startTime = dataParameter?.operationalStart
+  const endTime = dataParameter?.operationalEnd
+  const sTime = handleConvert(startTime)
+  const eTime = handleConvert(endTime)
 
   const handleGetBE = async () => {
     const Url = `https://api-portal.herokuapp.com/api/v1/${role}/parameter`;
@@ -31,9 +66,11 @@ function OperationalTime() {
     await axios
       .get(Url, { headers: { Authorization: `Bearer ${token}` } })
       .then((res) => {
-        setdataParameter(res.data.data);
+        setdataParameter(res.data.data[0]);
       })
       .catch((e) => console.log(e));
+
+    
   };
 
   const handleAPI = () => {
@@ -58,49 +95,9 @@ function OperationalTime() {
   };
 
   useEffect(() => {
-    handleGetBE();
+    handleGetBE()
+    console.log(startTime, endTime)
   }, []);
-
-  console.log("operational start", dataParameter[0]?.operationalStart);
-  console.log("operational end", dataParameter[0]?.operationalEnd);
-
-  const handleConvert = () => {
-    let startTime;
-    let endTime;
-
-    startTime = dataParameter[0]?.operationalStart;
-    endTime = dataParameter[0]?.operationalEnd;
-
-    const stringStart = startTime.toString();
-    const stringEnd = endTime.toString();
-
-    const startTimeLength = stringStart.length;
-    const endTimeLength = stringEnd.length;
-
-    if (startTimeLength === 1 && endTimeLength === 2) {
-      const startHour = stringStart[0];
-      const startMin = ":00";
-      const sTime = startHour + startMin;
-
-      const endHour = stringEnd[0] + stringEnd[1];
-      const endMin = ":00";
-      const eTime = endHour + endMin;
-
-      // setValue(sTime, eTime)
-      console.log(sTime, eTime);
-    } else if (startTimeLength === 3 && endTimeLength === 4) {
-      const startHour = stringStart[0];
-      const floatEnd = parseFloat(stringStart[2] + stringStart[3] * 60);
-      const sTime = startHour + ":";
-
-      const endHour = stringEnd[0] + stringEnd[1];
-      const endMin = stringEnd[3];
-      const eTime = endHour + ":" + endMin;
-
-      // setValue(sTime, eTime)
-      console.log(sTime, eTime);
-    }
-  };
 
   return (
     <>
@@ -134,7 +131,7 @@ function OperationalTime() {
                   <Card.Body>
                     <TimeRangePicker onChange={setValue} value={value} disableClock={true} format="HH:mm" rangeDivider="Until" clearIcon={null} autoFocus={true} />
                     <br />
-                    <Button variant="primary" onClick={handleConvert}>
+                    <Button variant="primary" onClick={handleAPI}>
                       Confirm
                     </Button>
                   </Card.Body>
