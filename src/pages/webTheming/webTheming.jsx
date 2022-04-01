@@ -196,14 +196,14 @@ function WebTheming() {
       .catch((err) => console.log(err));
   };
   useEffect(() => {
-    setInterval(() => {
-      getData();
-    }, 3000);
-  }, []);
+    getData();
+  }, [opButtonValue]);
   console.log("data", dataParameter);
   // console.log("percentage", dataParameter[0]?.percentageLiveness);
   // console.log("background", dataParameter[0]?.background);
   console.log("button", getOpButton);
+
+  console.log("button state", opButtonValue);
 
   return (
     <>
